@@ -286,15 +286,15 @@ p{line-height:1.6}
 /* ── MODALS ──────────────────────────────────────────── */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center;padding:14px}
 .modal-ov.open{display:flex}
-.modal{background:var(--surface);border-radius:var(--rl);box-shadow:var(--sh2);width:100%;max-width:560px;max-height:90vh;display:flex;flex-direction:column;animation:mIn .2s cubic-bezier(.34,1.56,.64,1)}
+.modal{background:var(--surface);border-radius:var(--rl);box-shadow:var(--sh2);width:100%;max-width:560px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;animation:mIn .2s cubic-bezier(.34,1.56,.64,1)}
 .modal.wide{max-width:640px}.modal.sm{max-width:390px}
 @keyframes mIn{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
 .modal-hdr h2{font-size:.98rem;font-weight:700}
 .m-close{color:var(--text3);font-size:.88rem;padding:4px 8px;border-radius:6px;transition:all var(--tr)}
 .m-close:hover{background:var(--surface2);color:var(--text)}
-.modal-body{padding:18px 20px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:14px}
-.modal-ftr{display:flex;align-items:center;justify-content:flex-start;gap:9px;padding:14px 20px;border-top:1px solid var(--border)}
+.modal-body{padding:18px 20px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0;display:flex;flex-direction:column;gap:14px}
+.modal-ftr{display:flex;align-items:center;justify-content:flex-start;gap:9px;padding:14px 20px;border-top:1px solid var(--border);flex-shrink:0}
 
 /* ── INVOICE ─────────────────────────────────────────── */
 .inv-wrap{font-family:var(--m);font-size:.83rem}
@@ -320,34 +320,7 @@ p{line-height:1.6}
 @keyframes tIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
 @keyframes tOut{from{opacity:1}to{opacity:0;transform:translateX(-14px)}}
 
-/* ── PRINT ───────────────────────────────────────────── */
-#invoicePrintArea{ display:none }
-@media print{
-  /* Hide the entire page */
-  body > *{ display:none !important; }
-  /* Show only the hidden print div */
-  #invoicePrintArea{
-    display:block !important;
-    position:fixed; inset:0;
-    background:#fff; color:#000;
-    direction:rtl; padding:24px;
-    font-family:'Noto Kufi Arabic','DM Sans',sans-serif;
-    font-size:13px; line-height:1.5;
-  }
-  #invoicePrintArea .inv-wrap{ max-width:320px; margin:0 auto; }
-  #invoicePrintArea .inv-head{ text-align:center; margin-bottom:12px; padding-bottom:12px; border-bottom:2px dashed #333; }
-  #invoicePrintArea .inv-head h2{ font-size:1.1rem; font-weight:700; margin-bottom:2px; }
-  #invoicePrintArea .inv-pname{ font-size:.95rem; font-weight:700; margin-bottom:2px; }
-  #invoicePrintArea .inv-meta{ font-size:.72rem; color:#555; direction:ltr; }
-  #invoicePrintArea .inv-tbl{ width:100%; border-collapse:collapse; margin-top:10px; }
-  #invoicePrintArea .inv-tbl th{ text-align:right; padding:4px 3px; border-bottom:1px solid #333; font-size:.72rem; font-weight:700; }
-  #invoicePrintArea .inv-tbl td{ padding:4px 3px; text-align:right; font-size:.75rem; border-bottom:1px solid #eee; }
-  #invoicePrintArea .inv-tbl .num{ text-align:left; direction:ltr; font-family:monospace; }
-  #invoicePrintArea .inv-tots{ margin-top:10px; padding-top:10px; border-top:2px dashed #333; }
-  #invoicePrintArea .inv-tr{ display:flex; justify-content:space-between; font-size:.78rem; padding:2px 0; }
-  #invoicePrintArea .inv-tr.grand{ font-size:.95rem; font-weight:700; margin-top:4px; }
-  #invoicePrintArea .inv-foot{ text-align:center; margin-top:12px; font-size:.7rem; color:#666; }
-}
+/* ── PRINT: handled via popup window in JS — no CSS needed here ── */
 
 /* ══════════════════════════════════════════════════════
    RESPONSIVE — TABLET 1200px
@@ -380,20 +353,15 @@ p{line-height:1.6}
   .inv-kpis{grid-template-columns:repeat(2,1fr)}
   .rep-kpis{grid-template-columns:1fr 1fr}
 
-  /* Modals — use bottom sheet style on mobile */
+  /* Modals on tablet — slide up from bottom */
   .modal-ov{align-items:flex-end;padding:0}
-  .modal{
-    border-radius:var(--rl) var(--rl) 0 0;
-    max-width:100%;
-    width:100%;
-    max-height:92vh;
-    animation:mSlideUp .25s cubic-bezier(.32,1,.48,1)
+  .modal,.modal.sm,.modal.wide{
+    border-radius:20px 20px 0 0;
+    max-width:100%;width:100%;
+    max-height:90vh;
+    overflow:hidden;
   }
-  .modal.sm{border-radius:var(--rl) var(--rl) 0 0;max-width:100%}
-  .modal.wide{border-radius:var(--rl) var(--rl) 0 0;max-width:100%}
   @keyframes mSlideUp{from{opacity:0;transform:translateY(60px)}to{opacity:1;transform:translateY(0)}}
-
-  /* Form grid single column on smaller screens */
   .f-grid{grid-template-columns:1fr 1fr}
 }
 
@@ -436,35 +404,18 @@ p{line-height:1.6}
     padding:10px 12px
   }
 
-  /* Modal full height bottom sheet */
+  /* Modal — bottom sheet, scrollable body */
   .modal-ov{padding:0;align-items:flex-end}
-  .modal{
+  .modal,.modal.sm,.modal.wide{
     border-radius:20px 20px 0 0;
-    max-width:100%;
-    width:100%;
-    max-height:88vh;
-    max-height:88dvh;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
+    max-width:100%;width:100%;
+    max-height:92vh;overflow:hidden;
   }
-  .modal-hdr{padding:14px 16px;flex-shrink:0}
-  .modal-body{
-    padding:12px 16px;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
-    flex:1;
-    min-height:0;
-  }
-  .modal-ftr{padding:12px 16px;flex-wrap:wrap;gap:8px;flex-shrink:0}
-  .modal-ftr .btn{flex:1;min-width:120px;justify-content:center}
-
-  /* Handle bar on modal — visual hint */
-  .modal::before{
-    content:'';display:block;width:40px;height:4px;
-    background:var(--border);border-radius:2px;
-    margin:10px auto -4px;flex-shrink:0
-  }
+  .modal::before{content:'';display:block;width:40px;height:4px;background:var(--border);border-radius:2px;margin:10px auto -4px;flex-shrink:0}
+  .modal-hdr{padding:12px 16px;flex-shrink:0}
+  .modal-body{padding:12px 16px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0}
+  .modal-ftr{padding:10px 16px;flex-wrap:wrap;gap:8px;flex-shrink:0}
+  .modal-ftr .btn{flex:1;justify-content:center}
 
   /* POS */
   .pos-srow input{font-size:16px}
@@ -810,8 +761,6 @@ p{line-height:1.6}
 </div>
 
 <div class="toast-c" id="toastC"></div>
-<!-- Hidden invoice print area (only shown during print) -->
-<div id="invoicePrintArea"></div>
 
 <script>
 /* ============================================================
@@ -1210,262 +1159,233 @@ var scanCanvas   = document.createElement('canvas');
 var scanCtx      = scanCanvas.getContext('2d');
 var scanBoxShown = null;
 
-// ── Native BarcodeDetector (Chrome 83+, Edge 83+, Safari 17+) ──
-var nativeDet = null;
-(function(){
-  if(!window.BarcodeDetector) return;
+// ── BARCODE SCANNER ───────────────────────────────────────
+// Self-contained EAN-13 / EAN-8 / UPC-A decoder + camera
+// No external libraries. Uses:
+//  1) BarcodeDetector API (Chrome/Edge/Safari) — when available
+//  2) Pure-JS pixel-level EAN decoder — universal fallback
+// ----------------------------------------------------------
+
+var scanActive=false, scanStream=null, scanRafId=null;
+var scanCallback=null, scanVideo=null, scanBoxShown=null;
+var _scanCvs=document.createElement('canvas');
+var _scanCtx=_scanCvs.getContext('2d');
+
+// Native BarcodeDetector setup
+var _bd=null;
+if(window.BarcodeDetector){
   try{
-    BarcodeDetector.getSupportedFormats().then(function(fmts){
-      nativeDet = new BarcodeDetector({formats: fmts});
-    }).catch(function(){
-      nativeDet = new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','code_39','qr_code']});
-    });
-  }catch(e){}
-})();
-
-// ── Pure-JS EAN-13 / EAN-8 / UPC decoder ──────────────────
-// Decodes standard 1D barcodes from a row of luminance values.
-var EAN_L = {
-  '0001101':'0','0011001':'1','0010011':'2','0111101':'3','0100011':'4',
-  '0110001':'5','0101111':'6','0111011':'7','0110111':'8','0001011':'9'
-};
-var EAN_G = {
-  '0100111':'0','0110011':'1','0011011':'2','0100001':'3','0011101':'4',
-  '0111001':'5','0000101':'6','0010001':'7','0001001':'8','0010111':'9'
-};
-var EAN_R = {
-  '1110010':'0','1100110':'1','1101100':'2','1000010':'3','1011100':'4',
-  '1001110':'5','1010000':'6','1000100':'7','1001000':'8','1110100':'9'
-};
-var UPC_PARITY = ['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
-
-function toLuminanceRow(imgData, w, h) {
-  // Sample the middle row of the frame
-  var row = [];
-  var y = Math.floor(h / 2);
-  var base = y * w * 4;
-  for(var x = 0; x < w; x++){
-    var i = base + x * 4;
-    row.push(0.299*imgData.data[i] + 0.587*imgData.data[i+1] + 0.114*imgData.data[i+2]);
-  }
-  return row;
+    _bd=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','code_39','qr_code','data_matrix','itf']});
+  }catch(e){ _bd=null; }
 }
 
-function binarize(row) {
-  // Local adaptive threshold
-  var win = Math.floor(row.length / 8);
-  var bin = [];
-  for(var i = 0; i < row.length; i++){
-    var start = Math.max(0, i-win), end = Math.min(row.length-1, i+win);
-    var sum = 0;
-    for(var j = start; j <= end; j++) sum += row[j];
-    bin.push(row[i] < (sum/(end-start+1)) * 0.85 ? 1 : 0);
-  }
-  return bin;
+// ── EAN / UPC lookup tables ─────────────────────────────────
+var _EL={'0001101':0,'0011001':1,'0010011':2,'0111101':3,'0100011':4,'0110001':5,'0101111':6,'0111011':7,'0110111':8,'0001011':9};
+var _EG={'0100111':0,'0110011':1,'0011011':2,'0100001':3,'0011101':4,'0111001':5,'0000101':6,'0010001':7,'0001001':8,'0010111':9};
+var _ER={'1110010':0,'1100110':1,'1101100':2,'1000010':3,'1011100':4,'1001110':5,'1010000':6,'1000100':7,'1001000':8,'1110100':9};
+// EAN-13 first digit from left parity pattern
+var _FD=['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
+
+// ── EAN checksum validator ──────────────────────────────────
+function _eanCheck(s){
+  var sum=0;
+  for(var i=0;i<s.length-1;i++) sum+=parseInt(s[i])*(i%2===(s.length===13?0:1)?1:3);
+  return (10-(sum%10))%10===parseInt(s[s.length-1]);
 }
 
-function runLengths(bin) {
-  var runs = [], cur = bin[0], count = 1;
-  for(var i = 1; i < bin.length; i++){
-    if(bin[i] === cur){ count++; }
-    else{ runs.push({v:cur, n:count}); cur = bin[i]; count = 1; }
+// ── Core row decoder ────────────────────────────────────────
+function _decodeRow(pixels, w){
+  // 1. Build luminance array
+  var lum=new Float32Array(w);
+  for(var x=0;x<w;x++){
+    var p=x*4;
+    lum[x]=pixels[p]*0.299+pixels[p+1]*0.587+pixels[p+2]*0.114;
   }
-  runs.push({v:cur, n:count});
-  return runs;
-}
+  // 2. Local-mean binarize (window = w/10)
+  var win=Math.max(5,Math.floor(w/10));
+  var bin=new Uint8Array(w);
+  // Prefix sum for speed
+  var psum=new Float64Array(w+1);
+  for(var i=0;i<w;i++) psum[i+1]=psum[i]+lum[i];
+  for(var x=0;x<w;x++){
+    var lo=Math.max(0,x-win), hi=Math.min(w-1,x+win);
+    var mean=(psum[hi+1]-psum[lo])/(hi-lo+1);
+    bin[x]=lum[x]<mean*0.88?1:0;
+  }
+  // 3. Run-length encode
+  var runs=[];
+  var cur=bin[0], cnt=1;
+  for(var i=1;i<w;i++){
+    if(bin[i]===cur){ cnt++; }
+    else{ runs.push(cur,cnt); cur=bin[i]; cnt=1; }
+  }
+  runs.push(cur,cnt);
+  // runs[i*2]=value(0/1), runs[i*2+1]=count
+  var nr=runs.length/2;
 
-function decodeEANFromRuns(runs) {
-  // Find guard bars (narrow-narrow-narrow pattern: 1,0,1)
-  for(var start = 0; start < runs.length - 60; start++){
-    // Find start guard: dark-light-dark each ~unit width
-    if(runs[start].v !== 1) continue;
-    var unit = runs[start].n;
-    if(unit < 2) continue;
-    if(!runs[start+1] || Math.abs(runs[start+1].n - unit) > unit*0.6) continue;
-    if(!runs[start+2] || Math.abs(runs[start+2].n - unit) > unit*0.6) continue;
+  // 4. Search for start guard (B W B) and decode
+  for(var si=0;si<nr-55;si++){
+    if(runs[si*2]!==1) continue;          // must start dark
+    // Estimate unit = average of first 3 guard elements
+    var u3=(runs[si*2+1]+runs[(si+1)*2+1]+runs[(si+2)*2+1])/3;
+    if(u3<1) continue;
 
-    // Try to decode 6 left digits after start guard
-    var pos = start + 3;
-    var digits = '';
-    var parityStr = '';
-    var ok = true;
-
-    for(var d = 0; d < 6 && ok; d++){
-      if(pos + 3 >= runs.length){ ok=false; break; }
-      var b = '';
-      for(var k = 0; k < 4; k++){
-        if(!runs[pos+k]){ ok=false; break; }
-        var bits = Math.round(runs[pos+k].n / unit);
-        if(bits < 1) bits = 1; if(bits > 4) bits = 4;
-        for(var bb=0;bb<bits;bb++) b += (runs[pos+k].v ? '1':'0');
+    // Helper: read n modules from run position ri
+    function readModules(ri, n){
+      var bits='', remaining=n;
+      while(remaining>0 && ri<nr){
+        var v=runs[ri*2], c=runs[ri*2+1];
+        var take=Math.min(remaining, Math.round(c/u3));
+        if(take<1) take=1;
+        for(var b=0;b<take;b++) bits+=v;
+        remaining-=take; ri++;
       }
-      if(!ok) break;
-      if(b.length !== 7){ ok=false; break; }
-      if(EAN_L[b] !== undefined){ digits += EAN_L[b]; parityStr += 'L'; }
-      else if(EAN_G[b] !== undefined){ digits += EAN_G[b]; parityStr += 'G'; }
-      else { ok=false; break; }
-      pos += 4;
+      return bits.length===n?bits:null;
     }
-    if(!ok || digits.length !== 6) continue;
 
-    // Middle guard: 0,1,0,1,0 (5 elements)
-    if(pos + 5 >= runs.length) continue;
-    pos += 5;
+    // Start guard = 1,0,1 (3 modules each 1 unit)
+    var s0=readModules(si,3);
+    if(!s0||s0!=='101') continue;
 
-    // Determine first digit from parity pattern (EAN-13)
-    var firstDigit = -1;
-    for(var p=0;p<10;p++){ if(UPC_PARITY[p]===parityStr){ firstDigit=p; break; } }
+    var ri=si+3; // skip 3 elements of start guard (3 runs consumed above is wrong—guard is exactly 3 runs)
+    // More precisely: start guard occupies runs[si],runs[si+1],runs[si+2]
+    // Each should be ~1 unit wide
+    ri=si+3;
+
+    // Decode 6 left digits (7 modules each)
+    var leftDigits='', parity='', ok=true;
+    for(var d=0;d<6&&ok;d++){
+      // Each digit = 4 runs = 7 modules
+      var mods='';
+      for(var k=0;k<4&&ri<nr;k++,ri++){
+        var cnt2=runs[ri*2+1];
+        var n2=Math.max(1,Math.min(4,Math.round(cnt2/u3)));
+        for(var b=0;b<n2;b++) mods+=''+runs[ri*2];
+      }
+      if(mods.length!==7){ok=false;break;}
+      if(_EL[mods]!==undefined){ leftDigits+=_EL[mods]; parity+='L'; }
+      else if(_EG[mods]!==undefined){ leftDigits+=_EG[mods]; parity+='G'; }
+      else{ok=false;break;}
+    }
+    if(!ok||leftDigits.length!==6) continue;
+
+    // Middle guard = 0,1,0,1,0 (5 runs)
+    ri+=5;
 
     // Decode 6 right digits
-    var rightDigits = '';
-    for(var d2 = 0; d2 < 6; d2++){
-      if(pos + 3 >= runs.length){ ok=false; break; }
-      var b2 = '';
-      for(var k2=0;k2<4;k2++){
-        if(!runs[pos+k2]){ ok=false; break; }
-        var bits2 = Math.round(runs[pos+k2].n / unit);
-        if(bits2<1) bits2=1; if(bits2>4) bits2=4;
-        for(var bb2=0;bb2<bits2;bb2++) b2 += (runs[pos+k2].v ? '1':'0');
+    var rightDigits='';
+    for(var d2=0;d2<6&&ok;d2++){
+      var mods2='';
+      for(var k2=0;k2<4&&ri<nr;k2++,ri++){
+        var cnt3=runs[ri*2+1];
+        var n3=Math.max(1,Math.min(4,Math.round(cnt3/u3)));
+        for(var b2=0;b2<n3;b2++) mods2+=''+runs[ri*2];
       }
-      if(!ok) break;
-      if(b2.length !== 7){ ok=false; break; }
-      if(EAN_R[b2] !== undefined){ rightDigits += EAN_R[b2]; }
-      else { ok=false; break; }
-      pos += 4;
+      if(mods2.length!==7){ok=false;break;}
+      if(_ER[mods2]!==undefined) rightDigits+=_ER[mods2];
+      else{ok=false;break;}
     }
-    if(!ok || rightDigits.length !== 6) continue;
+    if(!ok||rightDigits.length!==6) continue;
 
-    var fullCode = (firstDigit >= 0 ? String(firstDigit) : '') + digits + rightDigits;
+    // Determine first digit from parity (EAN-13)
+    var fd=-1;
+    for(var pi=0;pi<10;pi++) if(_FD[pi]===parity){fd=pi;break;}
 
-    // Validate checksum (EAN-13 = 13 digits, UPC-A = 12)
-    if(fullCode.length === 12 || fullCode.length === 13){
-      var sum = 0;
-      var len = fullCode.length;
-      for(var ci=0; ci < len-1; ci++){
-        var digit = parseInt(fullCode[ci]);
-        sum += (ci % 2 === (len===13 ? 0:1)) ? digit : digit*3;
-      }
-      var check = (10 - (sum % 10)) % 10;
-      if(check === parseInt(fullCode[len-1])){
-        return fullCode;
-      }
-    }
+    var code=(fd>=0?''+fd:'')+leftDigits+rightDigits;
+    if((code.length===12||code.length===13)&&_eanCheck(code)) return code;
   }
   return null;
 }
 
-function decodeFrameJS(video) {
-  var w = video.videoWidth, h = video.videoHeight;
-  if(!w || !h) return null;
-  scanCanvas.width = w; scanCanvas.height = h;
-  scanCtx.drawImage(video, 0, 0, w, h);
-  var imgData = scanCtx.getImageData(0, 0, w, h);
-  // Try multiple rows for robustness
-  var offsets = [0, -0.08, 0.08, -0.15, 0.15];
-  for(var oi=0; oi<offsets.length; oi++){
-    var yFrac = 0.5 + offsets[oi];
-    var y = Math.floor(h * yFrac);
-    var base = y * w * 4;
-    var row = [];
-    for(var x=0; x<w; x++){
-      var i = base + x*4;
-      row.push(0.299*imgData.data[i] + 0.587*imgData.data[i+1] + 0.114*imgData.data[i+2]);
-    }
-    var bin = binarize(row);
-    var runs = runLengths(bin);
-    var result = decodeEANFromRuns(runs);
-    if(result) return result;
+// ── Decode one video frame (try multiple rows) ──────────────
+function _decodeFrame(){
+  if(!scanVideo||scanVideo.readyState<2) return null;
+  var w=scanVideo.videoWidth, h=scanVideo.videoHeight;
+  if(!w||!h) return null;
+  _scanCvs.width=w; _scanCvs.height=h;
+  _scanCtx.drawImage(scanVideo,0,0,w,h);
+  // Sample 9 horizontal rows spread across middle of frame
+  var fracs=[.35,.40,.45,.50,.55,.60,.65,.42,.58];
+  for(var fi=0;fi<fracs.length;fi++){
+    var y=Math.floor(h*fracs[fi]);
+    var row=_scanCtx.getImageData(0,y,w,1).data;
+    var res=_decodeRow(row,w);
+    if(res) return res;
   }
   return null;
 }
 
-// ── Main scan loop ─────────────────────────────────────────
-function scanLoop() {
-  if(!scanActive || !scanVideo || scanVideo.readyState < 2){
-    if(scanActive) scanRafId = requestAnimationFrame(scanLoop);
-    return;
+// ── Scan loop ───────────────────────────────────────────────
+function scanLoop(){
+  if(!scanActive){return;}
+  if(!scanVideo||scanVideo.readyState<2){
+    scanRafId=requestAnimationFrame(scanLoop); return;
   }
-  // 1. Try native BarcodeDetector (fastest, most accurate)
-  if(nativeDet){
-    nativeDet.detect(scanVideo).then(function(results){
+  if(_bd){
+    _bd.detect(scanVideo).then(function(r){
       if(!scanActive) return;
-      if(results && results.length > 0){
-        var code = results[0].rawValue;
-        var cb = scanCallback;
-        stopScanner();
-        if(cb) cb(code);
-        return;
+      if(r&&r.length>0){
+        var code=r[0].rawValue;
+        var cb=scanCallback; stopScanner(); if(cb)cb(code);
+      } else {
+        // Also try JS decoder as second opinion
+        var code2=_decodeFrame();
+        if(code2&&scanActive){ var cb2=scanCallback; stopScanner(); if(cb2)cb2(code2); }
+        else if(scanActive) scanRafId=requestAnimationFrame(scanLoop);
       }
-      if(scanActive) scanRafId = requestAnimationFrame(scanLoop);
     }).catch(function(){
-      // BarcodeDetector failed — fallback to JS decoder
       if(!scanActive) return;
-      var code = decodeFrameJS(scanVideo);
-      if(code){ var cb=scanCallback; stopScanner(); if(cb) cb(code); return; }
-      if(scanActive) scanRafId = requestAnimationFrame(scanLoop);
+      var code=_decodeFrame();
+      if(code){ var cb=scanCallback; stopScanner(); if(cb)cb(code); }
+      else scanRafId=requestAnimationFrame(scanLoop);
     });
   } else {
-    // 2. Pure-JS EAN decoder
-    var code = decodeFrameJS(scanVideo);
-    if(code){ var cb=scanCallback; stopScanner(); if(cb) cb(code); return; }
-    if(scanActive) scanRafId = requestAnimationFrame(scanLoop);
+    var code=_decodeFrame();
+    if(code){ var cb=scanCallback; stopScanner(); if(cb)cb(code); }
+    else scanRafId=requestAnimationFrame(scanLoop);
   }
 }
 
-// ── Stop scanner ───────────────────────────────────────────
+// ── Stop ────────────────────────────────────────────────────
 function stopScanner(){
-  scanActive = false;
-  scanCallback = null;
-  if(scanRafId){ cancelAnimationFrame(scanRafId); scanRafId = null; }
-  if(scanStream){ scanStream.getTracks().forEach(function(t){ t.stop(); }); scanStream = null; }
-  if(scanVideo){ scanVideo.srcObject = null; scanVideo = null; }
-  if(scanBoxShown){
-    var b = document.getElementById(scanBoxShown);
-    if(b) b.style.display = 'none';
-    scanBoxShown = null;
-  }
+  scanActive=false; scanCallback=null;
+  if(scanRafId){cancelAnimationFrame(scanRafId);scanRafId=null;}
+  if(scanStream){scanStream.getTracks().forEach(function(t){t.stop();});scanStream=null;}
+  if(scanVideo){scanVideo.srcObject=null;scanVideo=null;}
+  if(scanBoxShown){var b=document.getElementById(scanBoxShown);if(b)b.style.display='none';scanBoxShown=null;}
 }
 
-// ── Start scanner — triggers browser camera permission dialog ─
-function startScanner(outerBoxId, videoContainerId, onDetect){
+// ── Start ────────────────────────────────────────────────────
+function startScanner(outerBoxId,videoContainerId,onDetect){
   stopScanner();
-  scanCallback = onDetect;
-  scanBoxShown = outerBoxId;
-
-  var box = document.getElementById(outerBoxId);
-  if(box) box.style.display = 'block';
-
-  navigator.mediaDevices.getUserMedia({
-    video:{ facingMode:{ideal:'environment'}, width:{ideal:1280}, height:{ideal:720} }
-  }).then(function(stream){
-    scanStream = stream;
-    scanActive = true;
-    var container = document.getElementById(videoContainerId);
-    if(!container){ stopScanner(); return; }
-    container.innerHTML = '';
-    var vid = document.createElement('video');
-    vid.setAttribute('playsinline','');
-    vid.setAttribute('autoplay','');
-    vid.muted = true;
-    vid.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;background:#000';
-    container.appendChild(vid);
-    scanVideo = vid;
-    vid.srcObject = stream;
-    vid.play().then(function(){ scanRafId = requestAnimationFrame(scanLoop); })
-              .catch(function(e){ toast('تعذّر تشغيل الفيديو','error'); stopScanner(); });
+  scanCallback=onDetect;
+  scanBoxShown=outerBoxId;
+  var box=document.getElementById(outerBoxId);
+  if(box) box.style.display='block';
+  navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}}})
+  .then(function(stream){
+    scanStream=stream; scanActive=true;
+    var ct=document.getElementById(videoContainerId);
+    if(!ct){stopScanner();return;}
+    ct.innerHTML='';
+    var vid=document.createElement('video');
+    vid.setAttribute('playsinline',''); vid.setAttribute('autoplay','');
+    vid.muted=true;
+    vid.style.cssText='width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;background:#000';
+    ct.appendChild(vid); scanVideo=vid;
+    vid.srcObject=stream;
+    vid.play().then(function(){scanRafId=requestAnimationFrame(scanLoop);})
+              .catch(function(){toast('تعذّر تشغيل الكاميرا','error');stopScanner();});
   }).catch(function(err){
-    var msg = 'تعذّر فتح الكاميرا';
-    if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError')
-      msg = 'رُفض إذن الكاميرا — يرجى السماح بالوصول من إعدادات المتصفح.';
-    else if(err.name==='NotFoundError')
-      msg = 'لا توجد كاميرا في هذا الجهاز.';
-    else if(err.name==='NotReadableError')
-      msg = 'الكاميرا مستخدمة من تطبيق آخر.';
-    toast(msg,'error');
-    stopScanner();
+    var msg='تعذّر فتح الكاميرا';
+    if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError') msg='رُفض إذن الكاميرا — اسمح بالوصول من إعدادات المتصفح.';
+    else if(err.name==='NotFoundError') msg='لا توجد كاميرا في هذا الجهاز.';
+    else if(err.name==='NotReadableError') msg='الكاميرا مستخدمة من تطبيق آخر.';
+    toast(msg,'error'); stopScanner();
   });
 }
 
+// ── Wire: Medicine modal ───────────────────────────────────
 // ── Wire: Medicine modal ───────────────────────────────────
 var medScanBtn = document.getElementById('medScanBtn');
 if(medScanBtn) medScanBtn.addEventListener('click', function(){
@@ -1618,13 +1538,55 @@ function showInvoice(sale){
     +'</div>'
     +'<div class="inv-foot"><p>شكراً لتعاملكم مع صيدليتنا</p></div></div>';
   var ib=document.getElementById('invoiceBody'); if(ib) ib.innerHTML=html;
-  // Also populate the hidden print-only area
-  var pa=document.getElementById('invoicePrintArea'); if(pa) pa.innerHTML=html;
   openModal('invoiceModal');
 }
 function showInvoiceById(id){ for(var i=0;i<sales.length;i++){ if(sales[i].id===id){ showInvoice(sales[i]); return; } } }
 var printBtn=document.getElementById('printBtn');
-if(printBtn) printBtn.addEventListener('click',function(){ window.print(); });
+if(printBtn) printBtn.addEventListener('click', function(){
+  var content = document.getElementById('invoiceBody');
+  if(!content) return;
+  var popup = window.open('','_blank','width=420,height=600,scrollbars=yes');
+  popup.document.write(
+    '<!DOCTYPE html><html lang="ar" dir="rtl"><head>'
+    +'<meta charset="UTF-8"/>'
+    +'<meta name="viewport" content="width=device-width,initial-scale=1"/>'
+    +'<title>فاتورة</title>'
+    +'<style>'
+    +'*{box-sizing:border-box;margin:0;padding:0}'
+    +'body{font-family:Arial,sans-serif;background:#fff;color:#000;direction:rtl;padding:20px;font-size:13px}'
+    +'.inv-wrap{max-width:360px;margin:0 auto}'
+    +'.inv-head{text-align:center;margin-bottom:14px;padding-bottom:14px;border-bottom:2px dashed #333}'
+    +'.inv-head h2{font-size:1.2rem;font-weight:700;margin-bottom:3px;letter-spacing:.04em}'
+    +'.inv-pname{font-size:1rem;font-weight:700;margin-bottom:2px}'
+    +'.inv-meta{font-size:.72rem;color:#555;margin-bottom:1px;direction:ltr}'
+    +'.inv-tbl{width:100%;border-collapse:collapse;margin-top:10px}'
+    +'.inv-tbl th{text-align:right;padding:5px 4px;border-bottom:1px solid #333;font-size:.72rem;font-weight:700}'
+    +'.inv-tbl td{padding:5px 4px;text-align:right;border-bottom:1px solid #ddd;font-size:.8rem}'
+    +'.inv-tbl .num{text-align:left;direction:ltr;font-family:monospace}'
+    +'.inv-tbl tr:nth-child(even) td{background:#f9f9f9}'
+    +'.inv-tots{margin-top:12px;padding-top:12px;border-top:2px dashed #333}'
+    +'.inv-tr{display:flex;justify-content:space-between;font-size:.82rem;padding:3px 0}'
+    +'.inv-tr span:last-child{font-family:monospace;direction:ltr}'
+    +'.inv-tr.grand{font-size:1rem;font-weight:700;margin-top:6px;padding-top:4px;border-top:1px solid #333}'
+    +'.inv-foot{text-align:center;margin-top:14px;font-size:.72rem;color:#666}'
+    +'@media print{'
+    +'  body{padding:10px}'
+    +'  .no-print{display:none}'
+    +'}'
+    +'</style>'
+    +'</head><body>'
+    +'<div class="inv-wrap">'
+    + content.innerHTML
+    +'</div>'
+    +'<div class="no-print" style="text-align:center;margin-top:20px">'
+    +'<button onclick="window.print()" style="padding:10px 30px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-family:Arial,sans-serif">🖨 طباعة</button>'
+    +'<button onclick="window.close()" style="padding:10px 20px;background:#eee;border:none;border-radius:8px;font-size:.9rem;cursor:pointer;margin-right:10px;font-family:Arial,sans-serif">إغلاق</button>'
+    +'</div>'
+    +'</body></html>'
+  );
+  popup.document.close();
+  popup.focus();
+});
 
 // ----------------------------------------------------------
 // 13. INVENTORY
