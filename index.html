@@ -502,6 +502,68 @@ body.pwa-standalone .toast-c{
 .bn-item.active .bn-icon{transform:scale(1.1)}
 .bn-item:active{opacity:.7}
 
+
+/* ── DEBTS PAGE ──────────────────────────────────────── */
+.debt-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.debt-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px 18px;box-shadow:var(--sh)}
+.debt-kpi.kd{border-color:rgba(220,38,38,.35)}
+.debt-kpi.kw{border-color:rgba(217,119,6,.35)}
+.debt-kpi.kg{border-color:rgba(22,163,74,.35)}
+.debt-kv{font-size:1.35rem;font-weight:700;font-family:var(--m);direction:ltr;text-align:right;display:block;margin-bottom:3px}
+.debt-kpi.kd .debt-kv{color:var(--red)}
+.debt-kpi.kw .debt-kv{color:var(--yellow)}
+.debt-kpi.kg .debt-kv{color:var(--green)}
+.debt-kl{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3)}
+.debt-filter-bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.debt-sort{padding:7px 11px;border:1px solid var(--border);border-radius:var(--rs);background:var(--surface);color:var(--text);font-size:.8rem;cursor:pointer;font-family:var(--f)}
+.debt-chips{display:flex;gap:5px;flex-wrap:wrap}
+.debt-chip{padding:5px 12px;border-radius:20px;background:var(--surface);border:1px solid var(--border);font-size:.76rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all var(--tr);font-family:var(--f)}
+.debt-chip:hover{border-color:var(--accent);color:var(--accent)}
+.debt-chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.debt-chip.unpaid{--c:var(--red)}
+.debt-chip.partial{--c:var(--yellow)}
+.debt-chip.paid{--c:var(--green)}
+.debt-chip.unpaid.active{background:var(--red);border-color:var(--red)}
+.debt-chip.partial.active{background:var(--yellow);border-color:var(--yellow);color:#000}
+.debt-chip.paid.active{background:var(--green);border-color:var(--green)}
+
+.debt-cards{display:flex;flex-direction:column;gap:10px}
+.debt-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);transition:transform .15s,box-shadow .15s}
+.debt-card:hover{transform:translateY(-1px);box-shadow:var(--sh2)}
+.debt-card.status-unpaid{border-right:4px solid var(--red)}
+.debt-card.status-partial{border-right:4px solid var(--yellow)}
+.debt-card.status-paid{border-right:4px solid var(--green);opacity:.75}
+.debt-card-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px 9px;gap:10px;flex-wrap:wrap}
+.debt-supplier{font-weight:700;font-size:.9rem;flex:1}
+.debt-status-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:12px;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
+.dsb-unpaid{background:rgba(220,38,38,.12);color:#ef4444;border:1px solid rgba(220,38,38,.25)}
+.dsb-partial{background:rgba(217,119,6,.12);color:#d97706;border:1px solid rgba(217,119,6,.25)}
+.dsb-paid{background:rgba(22,163,74,.12);color:#16a34a;border:1px solid rgba(22,163,74,.25)}
+.debt-card-body{padding:0 15px 12px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:flex-start}
+.debt-field{display:flex;flex-direction:column;gap:1px}
+.debt-field-lbl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3)}
+.debt-field-val{font-size:.82rem;color:var(--text);font-weight:500}
+.debt-field-val.money{font-family:var(--m);direction:ltr;color:var(--red);font-weight:700}
+.debt-field-val.money.paid{color:var(--green)}
+.debt-field-val.money.partial{color:var(--yellow)}
+.debt-card-img{margin:0 15px 12px;border-radius:var(--rs);overflow:hidden;border:1px solid var(--border);cursor:pointer;max-height:160px;display:flex;align-items:center;justify-content:center;background:var(--surface2)}
+.debt-card-img img{width:100%;max-height:160px;object-fit:cover;display:block}
+.debt-card-img .no-img{font-size:.75rem;color:var(--text3);padding:20px;text-align:center}
+.debt-card-actions{display:flex;gap:6px;padding:10px 15px;border-top:1px solid var(--border);flex-wrap:wrap}
+.debt-note{margin:0 15px 10px;font-size:.76rem;color:var(--text2);background:var(--surface2);border-radius:var(--rs);padding:8px 10px;line-height:1.6;border:1px solid var(--border)}
+
+/* Image lightbox */
+.img-lightbox{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;cursor:zoom-out;padding:20px}
+.img-lightbox.open{display:flex}
+.img-lightbox img{max-width:100%;max-height:90vh;border-radius:10px;object-fit:contain}
+.img-lightbox-close{position:absolute;top:16px;left:16px;color:#fff;font-size:1.5rem;cursor:pointer;background:rgba(255,255,255,.15);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center}
+
+@media(max-width:640px){
+  .debt-summary-grid{grid-template-columns:1fr 1fr}
+  .debt-kpi:last-child{grid-column:1/-1}
+  .debt-kv{font-size:1.1rem}
+}
+
 /* ══════════════════════════════════════════════════════
    RESPONSIVE — TABLET 1200px
 ══════════════════════════════════════════════════════ */
@@ -698,6 +760,9 @@ body.pwa-standalone .toast-c{
 }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -708,19 +773,79 @@ body.pwa-standalone .toast-c{
   <div class="login-bg-decor"><span></span><span></span><span></span></div>
   <div class="login-card">
     <div class="login-logo">⚕</div>
-    <div class="login-phname">صيدلية الاسرة النموذجية</div>
+    <div class="login-phname" id="loginPhName">صيدلية الاسرة النموذجية</div>
     <div class="login-sub">نظام إدارة الصيدليات</div>
-    <div class="login-field">
-      <label>اسم المستخدم</label>
-      <input type="text" id="loginUser" placeholder="admin" autocomplete="username"/>
+
+    <!-- FIREBASE CONFIG PANEL — shown only when not configured -->
+    <div id="fbConfigPanel" style="display:none;margin-bottom:16px;text-align:right">
+      <div style="background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);border-radius:10px;padding:12px 14px;margin-bottom:12px">
+        <p style="font-size:.78rem;color:rgba(255,255,255,.8);margin-bottom:6px;font-weight:600">🔗 ربط قاعدة بيانات Firebase</p>
+        <p style="font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.6">أدخل إعدادات Firebase الخاصة بك لمزامنة البيانات عبر الأجهزة. <a href="https://console.firebase.google.com" target="_blank" style="color:#60a5fa">console.firebase.google.com</a></p>
+      </div>
+      <div class="login-field">
+        <label>Firebase API Key</label>
+        <input type="text" id="fbApiKey" placeholder="AIzaSy..." autocomplete="off" style="font-family:monospace;font-size:.78rem"/>
+      </div>
+      <div class="login-field">
+        <label>Project ID</label>
+        <input type="text" id="fbProjectId" placeholder="my-pharmacy-12345" autocomplete="off" style="font-family:monospace;font-size:.78rem"/>
+      </div>
+      <div class="login-field">
+        <label>Auth Domain</label>
+        <input type="text" id="fbAuthDomain" placeholder="my-pharmacy-12345.firebaseapp.com" autocomplete="off" style="font-family:monospace;font-size:.78rem"/>
+      </div>
+      <button class="login-btn" id="fbSaveBtn" style="background:#1d6340;margin-bottom:8px">💾 حفظ الإعدادات والمتابعة</button>
+      <button class="login-btn" id="fbSkipBtn" style="background:rgba(255,255,255,.1);margin-bottom:0">تخطي — استخدام وضع محلي فقط</button>
     </div>
-    <div class="login-field">
-      <label>كلمة المرور</label>
-      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"/>
+
+    <!-- NORMAL LOGIN FORM -->
+    <div id="loginForm">
+      <div id="fbStatusBar" style="display:none;background:rgba(22,163,74,.15);border:1px solid rgba(22,163,74,.3);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:.75rem;color:#4ade80;text-align:right"></div>
+      <div class="login-field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="loginEmail" placeholder="admin@pharmacy.com" autocomplete="email"/>
+      </div>
+      <div class="login-field">
+        <label>كلمة المرور</label>
+        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+      <div class="login-err" id="loginErr"></div>
+      <button class="login-btn" id="loginBtn">دخول إلى النظام</button>
+      <div style="margin-top:10px;text-align:center">
+        <button id="showRegisterBtn" style="background:none;border:none;color:rgba(255,255,255,.45);font-size:.74rem;cursor:pointer;font-family:var(--f);text-decoration:underline">إنشاء حساب جديد</button>
+      </div>
     </div>
-    <div class="login-err" id="loginErr"></div>
-    <button class="login-btn" id="loginBtn">دخول إلى النظام</button>
-    <div class="login-hint">المستخدم الافتراضي: admin / كلمة المرور: 1234</div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" style="display:none">
+      <div class="login-field">
+        <label>الاسم</label>
+        <input type="text" id="regName" placeholder="اسم الصيدلاني" autocomplete="name"/>
+      </div>
+      <div class="login-field">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="regEmail" placeholder="admin@pharmacy.com" autocomplete="email"/>
+      </div>
+      <div class="login-field">
+        <label>كلمة المرور</label>
+        <input type="password" id="regPass" placeholder="6 أحرف على الأقل" autocomplete="new-password"/>
+      </div>
+      <div class="login-field">
+        <label>الدور</label>
+        <select id="regRole" style="width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-size:.9rem;font-family:var(--f)">
+          <option value="admin">مدير (Admin)</option>
+          <option value="pharmacist">صيدلاني</option>
+          <option value="cashier">كاشير</option>
+        </select>
+      </div>
+      <div class="login-err" id="regErr"></div>
+      <button class="login-btn" id="registerBtn">إنشاء الحساب</button>
+      <div style="margin-top:10px;text-align:center">
+        <button id="showLoginBtn" style="background:none;border:none;color:rgba(255,255,255,.45);font-size:.74rem;cursor:pointer;font-family:var(--f);text-decoration:underline">لدي حساب — تسجيل الدخول</button>
+      </div>
+    </div>
+
+    <div class="login-hint" id="loginModeHint"></div>
   </div>
 </div>
 
@@ -743,6 +868,7 @@ body.pwa-standalone .toast-c{
     <div class="nav-item" data-page="pos"><span class="nav-icon">⊞</span><span data-i18n="pointOfSale">نقطة البيع</span></div>
     <div class="nav-item" data-page="inventory"><span class="nav-icon">▤</span><span data-i18n="inventory">المخزون</span></div>
     <div class="nav-item" data-page="reports"><span class="nav-icon">◈</span><span data-i18n="reports">التقارير</span></div>
+    <div class="nav-item" data-page="debts"><span class="nav-icon">💳</span><span>الديون</span></div>
     <div class="nav-item" data-page="settings"><span class="nav-icon">◎</span><span data-i18n="settings">الإعدادات</span></div>
   </nav>
   <div class="sb-foot">
@@ -922,6 +1048,43 @@ body.pwa-standalone .toast-c{
       </div>
     </section>
 
+    <!-- DEBTS -->
+    <section class="page" id="page-debts">
+      <div class="page-head">
+        <div><h1>الديون المستحقة</h1><p class="page-sub" id="debtsSub"></p></div>
+        <button class="btn btn-primary" id="addDebtBtn">+ إضافة دين</button>
+      </div>
+
+      <!-- KPI summary -->
+      <div class="debt-summary-grid">
+        <div class="debt-kpi kd"><span class="debt-kv" id="dkTotal">0 د.ع</span><span class="debt-kl">إجمالي الديون</span></div>
+        <div class="debt-kpi kw"><span class="debt-kv" id="dkUnpaid">0 د.ع</span><span class="debt-kl">غير مسدّد</span></div>
+        <div class="debt-kpi kg"><span class="debt-kv" id="dkPaid">0 د.ع</span><span class="debt-kl">مسدّد</span></div>
+      </div>
+
+      <!-- Filters -->
+      <div class="debt-filter-bar">
+        <div class="debt-chips">
+          <button class="debt-chip active" data-df="all">الكل</button>
+          <button class="debt-chip unpaid" data-df="unpaid">غير مسدّد</button>
+          <button class="debt-chip partial" data-df="partial">جزء منه</button>
+          <button class="debt-chip paid" data-df="paid">مسدّد</button>
+        </div>
+        <select class="debt-sort" id="debtSort">
+          <option value="date_desc">الأحدث أولاً</option>
+          <option value="date_asc">الأقدم أولاً</option>
+          <option value="supplier">حسب المذخر</option>
+          <option value="amount_desc">الأعلى مبلغاً</option>
+          <option value="amount_asc">الأقل مبلغاً</option>
+        </select>
+      </div>
+
+      <!-- Cards list -->
+      <div class="debt-cards" id="debtCards">
+        <p class="empty">لا توجد ديون مسجّلة.</p>
+      </div>
+    </section>
+
     <!-- SETTINGS -->
     <section class="page" id="page-settings">
       <div class="page-head"><h1 data-i18n="settings">الإعدادات</h1></div>
@@ -947,6 +1110,17 @@ body.pwa-standalone .toast-c{
           <h3>بيانات تجريبية</h3>
           <p>تحميل أدوية ومبيعات نموذجية لاستكشاف النظام.</p>
           <button class="btn btn-secondary btn-full" id="seedBtn">تحميل البيانات النموذجية</button>
+        </div>
+        <div class="sett-card" id="dbStatusCard">
+          <h3>🔗 قاعدة البيانات</h3>
+          <div id="dbStatusInfo" style="font-size:.8rem;color:var(--text2);line-height:1.7"></div>
+          <button class="btn btn-secondary btn-full" id="forceSyncBtn">🔄 مزامنة الآن</button>
+          <!-- Firebase config is hardcoded — no reconfig needed -->
+        </div>
+        <div class="sett-card" id="usersCard" style="display:none">
+          <h3>👥 إدارة المستخدمين</h3>
+          <div id="usersList" style="font-size:.8rem;margin-bottom:10px"></div>
+          <p style="font-size:.73rem;color:var(--text3)">لإضافة مستخدم جديد: اطلب منه فتح التطبيق وإنشاء حساب بنفس إعدادات Firebase.</p>
         </div>
       </div>
     </section>
@@ -1007,6 +1181,58 @@ body.pwa-standalone .toast-c{
   </div>
 </div>
 
+<!-- DEBT ADD/EDIT MODAL -->
+<div class="modal-ov" id="debtModal">
+  <div class="modal">
+    <div class="modal-hdr"><h2 id="debtModalTitle">إضافة دين جديد</h2><button class="m-close" data-close="debtModal">✕</button></div>
+    <div class="modal-body">
+      <div class="f-grid">
+        <label class="f-lbl" style="grid-column:1/-1">اسم المذخر / المورد *<input type="text" id="dSupplier" placeholder="اسم المذخر"/></label>
+        <label class="f-lbl">رقم الفاتورة<input type="text" id="dInvoiceNo" placeholder="INV-001"/></label>
+        <label class="f-lbl">تاريخ الفاتورة *<input type="date" id="dDate"/></label>
+        <label class="f-lbl">إجمالي الدين (د.ع) *<input type="number" id="dTotal" placeholder="0" min="0" step="1"/></label>
+        <label class="f-lbl">المبلغ المسدّد (د.ع)<input type="number" id="dPaid" placeholder="0" min="0" step="1"/></label>
+      </div>
+      <label class="f-lbl" style="margin-top:4px">الحالة *
+        <select id="dStatus">
+          <option value="unpaid">غير مسدّد</option>
+          <option value="partial">مسدّد جزء منه</option>
+          <option value="paid">مسدّد بالكامل</option>
+        </select>
+      </label>
+      <label class="f-lbl" style="margin-top:4px">ملاحظات
+        <textarea id="dNote" rows="2" placeholder="أي ملاحظات إضافية..." style="padding:9px 11px;border:1px solid var(--border);border-radius:var(--rs);background:var(--surface);color:var(--text);font-size:.84rem;font-family:var(--f);resize:vertical;width:100%"></textarea>
+      </label>
+      <!-- Image upload -->
+      <div style="margin-top:6px">
+        <div class="f-lbl" style="margin-bottom:6px;font-size:.78rem;font-weight:600;color:var(--text2)">صورة الفاتورة</div>
+        <div id="debtImgPreview" style="display:none;margin-bottom:8px;border-radius:var(--rs);overflow:hidden;border:1px solid var(--border);max-height:180px;background:var(--surface2);display:flex;align-items:center;justify-content:center">
+          <img id="debtImgEl" src="" style="max-width:100%;max-height:180px;object-fit:cover;display:block"/>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <label class="btn btn-secondary btn-sm" for="debtImgFile" style="cursor:pointer;display:inline-flex;align-items:center;gap:5px">
+            📁 اختر صورة
+            <input type="file" id="debtImgFile" accept="image/*" style="display:none"/>
+          </label>
+          <button class="btn btn-secondary btn-sm" id="debtCamBtn">📷 التقاط صورة</button>
+          <button class="btn btn-ghost btn-sm" id="debtClearImgBtn" style="display:none">✕ حذف الصورة</button>
+        </div>
+        <input type="hidden" id="debtImgData" value=""/>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-primary" id="saveDebtBtn">حفظ</button>
+      <button class="btn btn-ghost" data-close="debtModal">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- DEBT VIEW MODAL (full details + image lightbox) -->
+<div class="img-lightbox" id="imgLightbox">
+  <div class="img-lightbox-close" onclick="closeLightbox()">✕</div>
+  <img id="lightboxImg" src="" alt="فاتورة"/>
+</div>
+
 <!-- INVOICE MODAL -->
 <div class="modal-ov" id="invoiceModal">
   <div class="modal wide">
@@ -1052,13 +1278,13 @@ body.pwa-standalone .toast-c{
     <span class="bn-icon">⊞</span>
     <span>البيع</span>
   </button>
+  <button class="bn-item" data-page="debts">
+    <span class="bn-icon">💳</span>
+    <span>الديون</span>
+  </button>
   <button class="bn-item" data-page="inventory">
     <span class="bn-icon">▤</span>
     <span>المخزون</span>
-  </button>
-  <button class="bn-item" data-page="reports">
-    <span class="bn-icon">◈</span>
-    <span>التقارير</span>
   </button>
   <button class="bn-item" data-page="settings">
     <span class="bn-icon">◎</span>
@@ -1115,14 +1341,13 @@ if(!sett.adminPass)    sett.adminPass = '1234';
 lsSet(KEYS.sett, sett);
 
 // ----------------------------------------------------------
-// 2. LOGIN
+// 2. LOGIN (Firebase + local fallback)
 // ----------------------------------------------------------
 var loggedIn = false;
 
 function checkLogin(){
   var ls=document.getElementById('loginScreen');
   if(!ls) return;
-  // Already logged in this session?
   if(sessionStorage.getItem('pc_logged')==='1'){
     loggedIn=true;
     ls.style.display='none';
@@ -1134,43 +1359,22 @@ function checkLogin(){
   ls.style.display='flex';
 }
 
-function doLogin(){
-  var u=((document.getElementById('loginUser')||{}).value||'').trim();
-  var p=((document.getElementById('loginPass')||{}).value||'');
-  var err=document.getElementById('loginErr');
-  if(!u||!p){ if(err) err.textContent='يرجى إدخال اسم المستخدم وكلمة المرور'; return; }
-  // Credentials: admin + adminPass from settings
-  var validUser = u==='admin';
-  var validPass = p===sett.adminPass;
-  if(!validUser||!validPass){
-    if(err) err.textContent='اسم المستخدم أو كلمة المرور غير صحيحة';
-    var inp=document.getElementById('loginPass'); if(inp){ inp.value=''; inp.focus(); }
-    return;
-  }
-  if(err) err.textContent='';
-  loggedIn=true;
-  sessionStorage.setItem('pc_logged','1');
-  sessionStorage.setItem('pc_user',u);
-  var ls=document.getElementById('loginScreen');
-  if(ls){ ls.style.opacity='0'; ls.style.transition='opacity .3s'; setTimeout(function(){ ls.style.display='none'; },300); }
-  var uel=document.getElementById('loginUserDisplay'); if(uel) uel.textContent=u;
-  init();
-}
-
 function doLogout(){
   sessionStorage.removeItem('pc_logged');
   sessionStorage.removeItem('pc_user');
   loggedIn=false;
   var ls=document.getElementById('loginScreen');
   if(ls){ ls.style.opacity='1'; ls.style.display='flex'; }
-  var eu=document.getElementById('loginUser'); if(eu) eu.value='';
   var ep=document.getElementById('loginPass'); if(ep) ep.value='';
+  var ee=document.getElementById('loginEmail'); if(ee) ee.value='';
   var err=document.getElementById('loginErr'); if(err) err.textContent='';
+  // Show correct panel
+  var cfg=fbLoadConfig?fbLoadConfig():null;
+  if(!cfg||!cfg.apiKey){
+    var loginForm=document.getElementById('loginForm'); if(loginForm) loginForm.style.display='block';
+  }
 }
 
-document.getElementById('loginBtn').addEventListener('click', doLogin);
-document.getElementById('loginPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
-document.getElementById('loginUser').addEventListener('keydown', function(e){ if(e.key==='Enter') document.getElementById('loginPass').focus(); });
 document.getElementById('logoutBtn').addEventListener('click', doLogout);
 
 // ----------------------------------------------------------
@@ -2210,6 +2414,450 @@ document.querySelectorAll('[data-close]').forEach(function(btn){
   });
 });
 
+
+// ===========================================================
+// FIREBASE + MULTI-USER AUTH + CLOUD SYNC
+// ===========================================================
+
+// ── CONFIG STORAGE KEY ───────────────────────────────────
+var FB_CFG_KEY = 'pc_firebase_cfg';
+var fbApp = null, fbAuth = null, fbDb = null;
+var fbUser = null;
+var fbCfg = null;
+var _syncPending = false;
+var _unsubMeds = null, _unsubSales = null, _unsubSett = null;
+
+// ── Load saved config ─────────────────────────────────────
+function fbLoadConfig(){
+  try{ return JSON.parse(localStorage.getItem(FB_CFG_KEY)||'null'); }
+  catch(e){ return null; }
+}
+function fbSaveConfig(cfg){
+  localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
+}
+
+// ── Init Firebase ─────────────────────────────────────────
+function fbInit(cfg){
+  if(!cfg||!cfg.apiKey||!cfg.projectId) return false;
+  try{
+    // If already initialized with same project, reuse
+    if(fbApp && fbApp.options.projectId === cfg.projectId){
+      return true;
+    }
+    // Delete old app if different project
+    if(fbApp){ try{ fbApp.delete(); }catch(e){} }
+    fbApp = firebase.initializeApp({
+      apiKey:      cfg.apiKey,
+      authDomain:  cfg.authDomain || cfg.projectId+'.firebaseapp.com',
+      projectId:   cfg.projectId
+    }, 'pharmacare-'+Date.now());
+    fbAuth = firebase.auth(fbApp);
+    fbDb   = firebase.firestore(fbApp);
+    // Enable offline persistence
+    fbDb.enablePersistence({synchronizeTabs:true}).catch(function(){});
+    fbCfg = cfg;
+    return true;
+  }catch(e){
+    console.error('[FB] Init error:', e);
+    return false;
+  }
+}
+
+// ── Check if Firebase available ───────────────────────────
+function fbAvailable(){
+  return !!(fbApp && fbAuth && fbDb && fbUser);
+}
+
+// ── Sync: write to Firestore ──────────────────────────────
+function fbPushMeds(){
+  if(!fbAvailable()) return;
+  fbDb.collection('pharmacies').doc(fbCfg.projectId)
+    .collection('data').doc('medicines')
+    .set({items: meds, updatedAt: new Date().toISOString(), updatedBy: fbUser.email})
+    .catch(function(e){ console.warn('[FB] Push meds error:', e); });
+}
+function fbPushSales(){
+  if(!fbAvailable()) return;
+  fbDb.collection('pharmacies').doc(fbCfg.projectId)
+    .collection('data').doc('sales')
+    .set({items: sales, updatedAt: new Date().toISOString(), updatedBy: fbUser.email})
+    .catch(function(e){ console.warn('[FB] Push sales error:', e); });
+}
+function fbPushSett(){
+  if(!fbAvailable()) return;
+  var s = Object.assign({}, sett);
+  delete s.adminPass; // never sync password to cloud
+  fbDb.collection('pharmacies').doc(fbCfg.projectId)
+    .collection('data').doc('settings')
+    .set(Object.assign(s, {updatedAt: new Date().toISOString(), updatedBy: fbUser.email}))
+    .catch(function(e){ console.warn('[FB] Push sett error:', e); });
+}
+
+// ── Sync: listen for real-time updates ───────────────────
+function fbSubscribeAll(){
+  if(!fbAvailable()) return;
+  var base = fbDb.collection('pharmacies').doc(fbCfg.projectId).collection('data');
+
+  // Medicines
+  if(_unsubMeds) _unsubMeds();
+  _unsubMeds = base.doc('medicines').onSnapshot(function(snap){
+    if(!snap.exists) return;
+    var data = snap.data();
+    if(data && data.items && data.updatedBy !== fbUser.email){
+      meds = data.items;
+      lsSet(KEYS.meds, meds);
+      refresh(curPage);
+      updateBadge();
+      toast('🔄 تم تحديث الأدوية من جهاز آخر', 'info');
+    }
+  }, function(e){ console.warn('[FB] Meds listener:', e); });
+
+  // Sales
+  if(_unsubSales) _unsubSales();
+  _unsubSales = base.doc('sales').onSnapshot(function(snap){
+    if(!snap.exists) return;
+    var data = snap.data();
+    if(data && data.items && data.updatedBy !== fbUser.email){
+      sales = data.items;
+      lsSet(KEYS.sales, sales);
+      refresh(curPage);
+      toast('🔄 تم تحديث المبيعات من جهاز آخر', 'info');
+    }
+  }, function(e){ console.warn('[FB] Sales listener:', e); });
+
+  // Settings
+  if(_unsubSett) _unsubSett();
+  _unsubSett = base.doc('settings').onSnapshot(function(snap){
+    if(!snap.exists) return;
+    var data = snap.data();
+    if(data && data.updatedBy !== fbUser.email){
+      var merged = Object.assign({}, sett, data);
+      delete merged.updatedAt; delete merged.updatedBy;
+      sett = merged;
+      lsSet(KEYS.sett, sett);
+      refresh(curPage);
+    }
+  }, function(e){ console.warn('[FB] Sett listener:', e); });
+}
+
+function fbUnsubscribeAll(){
+  if(_unsubMeds){ _unsubMeds(); _unsubMeds=null; }
+  if(_unsubSales){ _unsubSales(); _unsubSales=null; }
+  if(_unsubSett){ _unsubSett(); _unsubSett=null; }
+}
+
+// ── Force full sync ───────────────────────────────────────
+function fbFullSync(){
+  if(!fbAvailable()){ toast('غير متصل بقاعدة البيانات','warn'); return; }
+  var base = fbDb.collection('pharmacies').doc(fbCfg.projectId).collection('data');
+  Promise.all([
+    base.doc('medicines').get(),
+    base.doc('sales').get(),
+    base.doc('settings').get()
+  ]).then(function(snaps){
+    if(snaps[0].exists && snaps[0].data().items){ meds=snaps[0].data().items; lsSet(KEYS.meds,meds); }
+    if(snaps[1].exists && snaps[1].data().items){ sales=snaps[1].data().items; lsSet(KEYS.sales,sales); }
+    if(snaps[2].exists){
+      var s=snaps[2].data();
+      delete s.updatedAt; delete s.updatedBy;
+      sett=Object.assign({},sett,s); lsSet(KEYS.sett,sett);
+    }
+    refresh(curPage); updateBadge();
+    toast('✓ تمت المزامنة بنجاح','success');
+    updateDbStatusCard();
+  }).catch(function(e){ toast('خطأ في المزامنة: '+e.message,'error'); });
+}
+
+// ── Update DB status card in settings ────────────────────
+function updateDbStatusCard(){
+  var el = document.getElementById('dbStatusInfo');
+  if(!el) return;
+  if(!fbCfg){
+    el.innerHTML = '<span style="color:var(--text3)">⚠ غير مُعدّ — يعمل محلياً فقط</span>';
+    return;
+  }
+  var status = fbAvailable()
+    ? '<span style="color:var(--green)">● متصل</span>'
+    : '<span style="color:var(--yellow)">● غير متصل (وضع offline)</span>';
+  el.innerHTML =
+    'الحالة: '+status+'<br>'+
+    'المشروع: <code style="font-size:.73rem">'+fbCfg.projectId+'</code><br>'+
+    'المستخدم: <strong>'+(fbUser?fbUser.email:'—')+'</strong><br>'+
+    'الدور: <strong>'+(fbUser&&fbUser.role?fbUser.role:'—')+'</strong>';
+}
+
+// ── PATCH existing lsSet to also push to Firebase ────────
+var _origLsSet = lsSet;
+lsSet = function(k, v){
+  _origLsSet(k, v);
+  if(!fbAvailable()) return;
+  if(k === KEYS.meds)  fbPushMeds();
+  if(k === KEYS.sales) fbPushSales();
+  if(k === KEYS.sett)  fbPushSett();
+};
+
+// ── PATCH doLogout to also sign out of Firebase ──────────
+var _origDoLogout = doLogout;
+doLogout = function(){
+  fbUnsubscribeAll();
+  if(fbAuth) fbAuth.signOut().catch(function(){});
+  fbUser = null;
+  _origDoLogout();
+  updateDbStatusCard();
+};
+
+// ===========================================================
+// LOGIN SCREEN LOGIC (Firebase version)
+// ===========================================================
+
+// ── Toggle login/register forms ───────────────────────────
+var _showRegBtn = document.getElementById('showRegisterBtn');
+var _showLoginBtn = document.getElementById('showLoginBtn');
+if(_showRegBtn) _showRegBtn.addEventListener('click', function(){
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('registerForm').style.display='block';
+});
+if(_showLoginBtn) _showLoginBtn.addEventListener('click', function(){
+  document.getElementById('registerForm').style.display='none';
+  document.getElementById('loginForm').style.display='block';
+});
+
+// ── Firebase config save ──────────────────────────────────
+var _fbSaveBtn = document.getElementById('fbSaveBtn');
+if(_fbSaveBtn) _fbSaveBtn.addEventListener('click', function(){
+  var cfg = {
+    apiKey:     (document.getElementById('fbApiKey')||{}).value.trim(),
+    projectId:  (document.getElementById('fbProjectId')||{}).value.trim(),
+    authDomain: (document.getElementById('fbAuthDomain')||{}).value.trim()
+  };
+  if(!cfg.apiKey || !cfg.projectId){ alert('يرجى إدخال API Key و Project ID'); return; }
+  if(!cfg.authDomain) cfg.authDomain = cfg.projectId+'.firebaseapp.com';
+  if(fbInit(cfg)){
+    fbSaveConfig(cfg);
+    document.getElementById('fbConfigPanel').style.display='none';
+    document.getElementById('loginForm').style.display='block';
+    var hint = document.getElementById('loginModeHint');
+    if(hint) hint.textContent = '✓ متصل بـ Firebase — '+cfg.projectId;
+    toast('تم ربط Firebase بنجاح','success');
+  } else {
+    alert('فشل ربط Firebase — تحقق من الإعدادات');
+  }
+});
+
+var _fbSkipBtn = document.getElementById('fbSkipBtn');
+if(_fbSkipBtn) _fbSkipBtn.addEventListener('click', function(){
+  document.getElementById('fbConfigPanel').style.display='none';
+  document.getElementById('loginForm').style.display='block';
+  var hint = document.getElementById('loginModeHint');
+  if(hint) hint.textContent = '⚠ وضع محلي — البيانات محفوظة على هذا الجهاز فقط';
+});
+
+// ── Firebase login ────────────────────────────────────────
+function doFirebaseLogin(){
+  var email = ((document.getElementById('loginEmail')||{}).value||'').trim();
+  var pass  = ((document.getElementById('loginPass')||{}).value||'');
+  var err   = document.getElementById('loginErr');
+  if(!email||!pass){ if(err) err.textContent='يرجى إدخال البريد الإلكتروني وكلمة المرور'; return; }
+  if(err) err.textContent='جارٍ تسجيل الدخول...';
+  fbAuth.signInWithEmailAndPassword(email, pass)
+    .then(function(cred){
+      return fbDb.collection('users').doc(cred.user.uid).get()
+        .then(function(snap){
+          fbUser = cred.user;
+          fbUser.role = snap.exists ? (snap.data().role||'pharmacist') : 'pharmacist';
+          fbUser.displayName2 = snap.exists ? (snap.data().name||email) : email;
+          return cred;
+        });
+    })
+    .then(function(cred){
+      sessionStorage.setItem('pc_logged','1');
+      sessionStorage.setItem('pc_user', fbUser.displayName2||email);
+      loggedIn=true;
+      var ls=document.getElementById('loginScreen');
+      if(ls){ ls.style.opacity='0'; ls.style.transition='opacity .3s'; setTimeout(function(){ ls.style.display='none'; },300); }
+      var uel=document.getElementById('loginUserDisplay'); if(uel) uel.textContent=fbUser.displayName2||email;
+      if(err) err.textContent='';
+      fbSubscribeAll();
+      fbFullSync();
+      updateDbStatusCard();
+      init();
+    })
+    .catch(function(e){
+      var msg = 'خطأ في تسجيل الدخول';
+      if(e.code==='auth/user-not-found'||e.code==='auth/wrong-password'||e.code==='auth/invalid-credential') msg='البريد الإلكتروني أو كلمة المرور غير صحيحة';
+      else if(e.code==='auth/too-many-requests') msg='تم تجاوز عدد المحاولات — حاول لاحقاً';
+      else if(e.code==='auth/network-request-failed') msg='تعذّر الاتصال — تحقق من الإنترنت';
+      if(err) err.textContent=msg;
+    });
+}
+
+// ── Firebase register ─────────────────────────────────────
+var _registerBtn = document.getElementById('registerBtn');
+if(_registerBtn) _registerBtn.addEventListener('click', function(){
+  var name  = ((document.getElementById('regName')||{}).value||'').trim();
+  var email = ((document.getElementById('regEmail')||{}).value||'').trim();
+  var pass  = ((document.getElementById('regPass')||{}).value||'');
+  var role  = ((document.getElementById('regRole')||{}).value||'pharmacist');
+  var err   = document.getElementById('regErr');
+  if(!name||!email||!pass){ if(err) err.textContent='يرجى ملء جميع الحقول'; return; }
+  if(pass.length<6){ if(err) err.textContent='كلمة المرور يجب أن تكون 6 أحرف على الأقل'; return; }
+  if(!fbAvailable()&&!fbAuth){ if(err) err.textContent='يجب إعداد Firebase أولاً'; return; }
+  if(err) err.textContent='جارٍ إنشاء الحساب...';
+  fbAuth.createUserWithEmailAndPassword(email, pass)
+    .then(function(cred){
+      return fbDb.collection('users').doc(cred.user.uid).set({
+        name: name, email: email, role: role,
+        createdAt: new Date().toISOString()
+      }).then(function(){ return cred; });
+    })
+    .then(function(cred){
+      fbUser = cred.user;
+      fbUser.role = role;
+      fbUser.displayName2 = name;
+      sessionStorage.setItem('pc_logged','1');
+      sessionStorage.setItem('pc_user', name);
+      loggedIn=true;
+      var ls=document.getElementById('loginScreen');
+      if(ls){ ls.style.opacity='0'; ls.style.transition='opacity .3s'; setTimeout(function(){ ls.style.display='none'; },300); }
+      var uel=document.getElementById('loginUserDisplay'); if(uel) uel.textContent=name;
+      if(err) err.textContent='';
+      fbSubscribeAll();
+      fbFullSync();
+      updateDbStatusCard();
+      init();
+      toast('مرحباً '+name+' — تم إنشاء حسابك بنجاح','success');
+    })
+    .catch(function(e){
+      var msg='خطأ في إنشاء الحساب';
+      if(e.code==='auth/email-already-in-use') msg='هذا البريد الإلكتروني مستخدم بالفعل';
+      else if(e.code==='auth/invalid-email') msg='البريد الإلكتروني غير صحيح';
+      else if(e.code==='auth/weak-password') msg='كلمة المرور ضعيفة جداً';
+      if(err) err.textContent=msg;
+    });
+});
+
+// ── Local fallback login (when Firebase not configured) ───
+function doLocalLogin(){
+  var email = ((document.getElementById('loginEmail')||{}).value||'').trim();
+  var pass  = ((document.getElementById('loginPass')||{}).value||'');
+  var err   = document.getElementById('loginErr');
+  // Accept email OR just "admin" as username
+  var validUser = email==='admin' || email===('admin@'+(sett.pharmacyName||'pharmacy').replace(/\s/g,'')+'.com');
+  var validPass = pass===sett.adminPass;
+  if(!validUser||!validPass){
+    if(err) err.textContent='البريد الإلكتروني أو كلمة المرور غير صحيحة';
+    var inp=document.getElementById('loginPass'); if(inp){inp.value='';inp.focus();}
+    return;
+  }
+  if(err) err.textContent='';
+  loggedIn=true;
+  sessionStorage.setItem('pc_logged','1');
+  sessionStorage.setItem('pc_user', email);
+  var ls=document.getElementById('loginScreen');
+  if(ls){ ls.style.opacity='0'; ls.style.transition='opacity .3s'; setTimeout(function(){ ls.style.display='none'; },300); }
+  var uel=document.getElementById('loginUserDisplay'); if(uel) uel.textContent='admin';
+  init();
+}
+
+// ── Main login button handler ─────────────────────────────
+var _loginBtn2 = document.getElementById('loginBtn');
+if(_loginBtn2) _loginBtn2.addEventListener('click', function(){
+  if(fbAuth) doFirebaseLogin(); else doLocalLogin();
+});
+// Enter key support
+var _loginPassEl = document.getElementById('loginPass');
+if(_loginPassEl) _loginPassEl.addEventListener('keydown', function(e){
+  if(e.key==='Enter'){ if(fbAuth) doFirebaseLogin(); else doLocalLogin(); }
+});
+var _loginEmailEl = document.getElementById('loginEmail');
+if(_loginEmailEl) _loginEmailEl.addEventListener('keydown', function(e){
+  if(e.key==='Enter') document.getElementById('loginPass').focus();
+});
+
+// ── reconfigure Firebase from settings ───────────────────
+var _reconfigBtn = document.getElementById('reconfigDbBtn');
+if(_reconfigBtn) _reconfigBtn.addEventListener('click', function(){
+  localStorage.removeItem(FB_CFG_KEY);
+  fbUnsubscribeAll();
+  fbApp=null; fbAuth=null; fbDb=null; fbUser=null; fbCfg=null;
+  doLogout();
+});
+
+// ── Force sync button ─────────────────────────────────────
+var _forceSyncBtn = document.getElementById('forceSyncBtn');
+if(_forceSyncBtn) _forceSyncBtn.addEventListener('click', fbFullSync);
+
+// ===========================================================
+// STARTUP: decide login mode
+// ===========================================================
+(function(){
+  // ── Hardcoded Firebase config — auto-connects on every device ──
+  var HARDCODED_CFG = {
+    apiKey:     "AIzaSyDpXL-PjtTFpzAKikLQjOFEgNtaZQZmK7w",
+    projectId:  "my-pharmacy-2026",
+    authDomain: "my-pharmacy-2026.firebaseapp.com"
+  };
+
+  // Always use hardcoded config — save it so settings page shows it
+  fbSaveConfig(HARDCODED_CFG);
+  localStorage.setItem('pc_fb_setup_shown','1');
+
+  var loginForm = document.getElementById('loginForm');
+  var fbPanel   = document.getElementById('fbConfigPanel');
+  var hint      = document.getElementById('loginModeHint');
+  var statusBar = document.getElementById('fbStatusBar');
+
+  // Hide config panel — not needed anymore
+  if(fbPanel) fbPanel.style.display='none';
+  if(loginForm) loginForm.style.display='block';
+
+  if(fbInit(HARDCODED_CFG)){
+    if(statusBar){ statusBar.style.display='block'; statusBar.textContent='● متصل بـ Firebase — صيدلية الاسرة النموذجية'; }
+    if(hint) hint.textContent='سجّل الدخول ببريدك الإلكتروني';
+
+    // Auto-resume session if Firebase auth state persists
+    fbAuth.onAuthStateChanged(function(user){
+      if(user && !loggedIn){
+        fbDb.collection('users').doc(user.uid).get().then(function(snap){
+          fbUser = user;
+          fbUser.role = snap.exists ? (snap.data().role||'pharmacist') : 'pharmacist';
+          fbUser.displayName2 = snap.exists ? (snap.data().name||user.email) : user.email;
+          // Auto-login: Firebase remembers the session across browser restarts
+          loggedIn = true;
+          var ls = document.getElementById('loginScreen');
+          if(ls){ ls.style.opacity='0'; ls.style.transition='opacity .3s'; setTimeout(function(){ ls.style.display='none'; },300); }
+          var uel = document.getElementById('loginUserDisplay');
+          if(uel) uel.textContent = fbUser.displayName2 || user.email;
+          sessionStorage.setItem('pc_logged','1');
+          sessionStorage.setItem('pc_user', fbUser.displayName2||user.email);
+          fbSubscribeAll();
+          fbFullSync();
+          updateDbStatusCard();
+          init();
+        }).catch(function(){
+          // User doc missing — still log them in
+          fbUser = user;
+          fbUser.role = 'pharmacist';
+          fbUser.displayName2 = user.email;
+          loggedIn = true;
+          var ls = document.getElementById('loginScreen');
+          if(ls){ ls.style.opacity='0'; setTimeout(function(){ ls.style.display='none'; },300); }
+          sessionStorage.setItem('pc_logged','1');
+          fbSubscribeAll();
+          fbFullSync();
+          updateDbStatusCard();
+          init();
+        });
+      }
+    });
+  } else {
+    if(hint) hint.textContent = '⚠ تعذّر الاتصال — تحقق من الإنترنت';
+  }
+
+  updateDbStatusCard();
+})();
+
+
 // ----------------------------------------------------------
 // 19. INIT
 // ----------------------------------------------------------
@@ -2378,9 +3026,415 @@ applyTheme=function(dark){
   _updateThemeColor();
 };
 
-// Start: show login first, then init after successful login
+// Start: show login — Firebase handler calls init() after auth
 checkLogin();
-if(loggedIn) init();
+if(loggedIn && !fbAuth) init();
+
+// ----------------------------------------------------------
+// DEBTS MODULE — ديون الصيدلية
+// ----------------------------------------------------------
+
+var debts = lsGet('pc_debts') || [];
+if(!Array.isArray(debts)) debts = [];
+KEYS.debts = 'pc_debts';
+
+// Extend PAGE_NAMES
+PAGE_NAMES['debts'] = 'الديون المستحقة';
+
+// Extend refresh()
+var _origRefresh = refresh;
+refresh = function(page){
+  _origRefresh(page);
+  if(page === 'debts') renderDebts();
+};
+
+// Extend Firebase sync
+var _origFbPush = lsSet;
+// (lsSet is already patched to push; we just need debts key handled)
+// We'll patch fbPushMeds pattern for debts in Firebase section at bottom
+
+// ── Debt status helpers ──────────────────────────────────
+var debtStatusLabels = { unpaid:'غير مسدّد', partial:'جزء منه', paid:'مسدّد' };
+var debtStatusClass  = { unpaid:'dsb-unpaid', partial:'dsb-partial', paid:'dsb-paid' };
+var debtCardClass    = { unpaid:'status-unpaid', partial:'status-partial', paid:'status-paid' };
+
+var debtFilter = 'all';
+
+// ── KPI totals ───────────────────────────────────────────
+function calcDebtKPIs(){
+  var total=0, unpaid=0, paid=0;
+  debts.forEach(function(d){
+    total  += (d.total||0);
+    paid   += (d.paidAmt||0);
+    unpaid += (d.total||0) - (d.paidAmt||0);
+  });
+  return {total:total, unpaid:unpaid, paid:paid};
+}
+
+// ── Render ────────────────────────────────────────────────
+function renderDebts(){
+  var k = calcDebtKPIs();
+  var dkT=document.getElementById('dkTotal');
+  var dkU=document.getElementById('dkUnpaid');
+  var dkP=document.getElementById('dkPaid');
+  if(dkT) dkT.textContent = fmt(k.total);
+  if(dkU) dkU.textContent = fmt(k.unpaid);
+  if(dkP) dkP.textContent = fmt(k.paid);
+
+  var sub = document.getElementById('debtsSub');
+  if(sub) sub.textContent = debts.length + ' فاتورة مسجّلة';
+
+  var sort = (document.getElementById('debtSort')||{}).value||'date_desc';
+  var filtered = debts.filter(function(d){
+    if(debtFilter==='all') return true;
+    return d.status === debtFilter;
+  });
+
+  // Sort
+  filtered.sort(function(a,b){
+    if(sort==='date_desc') return new Date(b.date||0)-new Date(a.date||0);
+    if(sort==='date_asc')  return new Date(a.date||0)-new Date(b.date||0);
+    if(sort==='supplier')  return (a.supplier||'').localeCompare(b.supplier||'','ar');
+    if(sort==='amount_desc') return (b.total||0)-(a.total||0);
+    if(sort==='amount_asc')  return (a.total||0)-(b.total||0);
+    return 0;
+  });
+
+  var container = document.getElementById('debtCards');
+  if(!container) return;
+  if(!filtered.length){
+    container.innerHTML = '<p class="empty">' + (debtFilter==='all'?'لا توجد ديون مسجّلة.':'لا توجد نتائج لهذا الفلتر.') + '</p>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(d){
+    var remaining = (d.total||0) - (d.paidAmt||0);
+    var pct = d.total>0 ? Math.round((d.paidAmt||0)/d.total*100) : 0;
+    var statusLbl = debtStatusLabels[d.status]||d.status;
+    var statusCls = debtStatusClass[d.status]||'';
+    var cardCls   = debtCardClass[d.status]||'';
+
+    var imgHtml = '';
+    if(d.img){
+      imgHtml = '<div class="debt-card-img" onclick="openLightbox(\''+esc(d.id)+'\')">'
+        +'<img src="'+d.img+'" alt="فاتورة" loading="lazy"/>'
+        +'</div>';
+    } else {
+      imgHtml = '<div class="debt-card-img" onclick="editDebt(\''+esc(d.id)+'\')"><div class="no-img">📄 لا توجد صورة<br><small>اضغط للتعديل وإضافة صورة</small></div></div>';
+    }
+
+    var noteHtml = d.note ? '<div class="debt-note">📝 '+esc(d.note)+'</div>' : '';
+    var progressHtml = d.status==='partial' ? 
+      '<div style="margin:0 15px 10px"><div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:var(--yellow);border-radius:2px"></div></div><div style="font-size:.67rem;color:var(--text3);margin-top:3px;text-align:left;direction:ltr">'+pct+'% مسدّد</div></div>' : '';
+
+    return '<div class="debt-card '+cardCls+'" id="dcard-'+esc(d.id)+'">'
+      +'<div class="debt-card-head">'
+        +'<span class="debt-supplier">🏪 '+esc(d.supplier||'غير محدد')+'</span>'
+        +'<span class="debt-status-badge '+statusCls+'">'+statusLbl+'</span>'
+      +'</div>'
+      +'<div class="debt-card-body">'
+        +'<div class="debt-field"><span class="debt-field-lbl">رقم الفاتورة</span><span class="debt-field-val">'+(d.invoiceNo?esc(d.invoiceNo):'—')+'</span></div>'
+        +'<div class="debt-field"><span class="debt-field-lbl">تاريخ الفاتورة</span><span class="debt-field-val">'+fmtD(d.date)+'</span></div>'
+        +'<div class="debt-field"><span class="debt-field-lbl">إجمالي الدين</span><span class="debt-field-val money">'+fmt(d.total||0)+'</span></div>'
+        +'<div class="debt-field"><span class="debt-field-lbl">المسدّد</span><span class="debt-field-val money paid">'+fmt(d.paidAmt||0)+'</span></div>'
+        +'<div class="debt-field"><span class="debt-field-lbl">المتبقي</span><span class="debt-field-val money '+(remaining>0?'':'partial')+'">'+fmt(remaining)+'</span></div>'
+      +'</div>'
+      + progressHtml
+      + noteHtml
+      + imgHtml
+      +'<div class="debt-card-actions">'
+        +'<button class="act-btn" data-action="edit" data-did="'+esc(d.id)+'">✏ تعديل</button>'
+        +(d.status!=='paid'?'<button class="act-btn" style="color:var(--green);border-color:var(--green)" data-action="markpaid" data-did="'+esc(d.id)+'">✓ تسديد كامل</button>':'')
+        +'<button class="act-btn del" data-action="del" data-did="'+esc(d.id)+'">🗑 حذف</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+
+  // Wire action buttons
+  container.querySelectorAll('.act-btn[data-action]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = this.getAttribute('data-did');
+      var action = this.getAttribute('data-action');
+      if(action==='edit')     editDebt(id);
+      else if(action==='markpaid') markDebtPaid(id);
+      else if(action==='del') deleteDebt(id);
+    });
+  });
+}
+
+// ── Filter chips ─────────────────────────────────────────
+document.querySelectorAll('.debt-chip[data-df]').forEach(function(chip){
+  chip.addEventListener('click', function(){
+    document.querySelectorAll('.debt-chip').forEach(function(c){ c.classList.remove('active'); });
+    this.classList.add('active');
+    debtFilter = this.getAttribute('data-df');
+    renderDebts();
+  });
+});
+var debtSortEl = document.getElementById('debtSort');
+if(debtSortEl) debtSortEl.addEventListener('change', renderDebts);
+
+// ── Add debt button ───────────────────────────────────────
+var addDebtBtn = document.getElementById('addDebtBtn');
+if(addDebtBtn) addDebtBtn.addEventListener('click', function(){
+  openDebtModal(null);
+});
+
+// ── Open modal for add/edit ───────────────────────────────
+var editDebtId = null;
+
+function openDebtModal(id){
+  editDebtId = id;
+  var titleEl = document.getElementById('debtModalTitle');
+  var d = id ? debts.find(function(x){ return x.id===id; }) : null;
+
+  if(titleEl) titleEl.textContent = id ? 'تعديل الدين' : 'إضافة دين جديد';
+
+  document.getElementById('dSupplier').value   = d ? (d.supplier||'') : '';
+  document.getElementById('dInvoiceNo').value  = d ? (d.invoiceNo||'') : '';
+  document.getElementById('dDate').value       = d ? (d.date||todayStr()) : todayStr();
+  document.getElementById('dTotal').value      = d ? (d.total||0) : '';
+  document.getElementById('dPaid').value       = d ? (d.paidAmt||0) : '';
+  document.getElementById('dStatus').value     = d ? (d.status||'unpaid') : 'unpaid';
+  document.getElementById('dNote').value       = d ? (d.note||'') : '';
+  document.getElementById('debtImgData').value = d ? (d.img||'') : '';
+
+  // Show/hide image preview
+  var previewEl = document.getElementById('debtImgPreview');
+  var imgEl     = document.getElementById('debtImgEl');
+  var clearBtn  = document.getElementById('debtClearImgBtn');
+  if(d && d.img){
+    imgEl.src = d.img;
+    previewEl.style.display = 'flex';
+    clearBtn.style.display  = 'inline-flex';
+  } else {
+    imgEl.src = '';
+    previewEl.style.display = 'none';
+    clearBtn.style.display  = 'none';
+  }
+
+  openModal('debtModal');
+}
+
+function editDebt(id){ openDebtModal(id); }
+
+// ── Image handling ────────────────────────────────────────
+var debtImgFileEl = document.getElementById('debtImgFile');
+if(debtImgFileEl) debtImgFileEl.addEventListener('change', function(){
+  var file = this.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var data = e.target.result;
+    document.getElementById('debtImgData').value = data;
+    document.getElementById('debtImgEl').src = data;
+    document.getElementById('debtImgPreview').style.display = 'flex';
+    document.getElementById('debtClearImgBtn').style.display = 'inline-flex';
+  };
+  reader.readAsDataURL(file);
+  this.value = '';
+});
+
+// Camera capture
+var debtCamBtn = document.getElementById('debtCamBtn');
+if(debtCamBtn) debtCamBtn.addEventListener('click', function(){
+  var input = document.createElement('input');
+  input.type='file'; input.accept='image/*'; input.capture='environment';
+  input.onchange = function(){
+    var file = this.files[0]; if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      var data = e.target.result;
+      document.getElementById('debtImgData').value = data;
+      document.getElementById('debtImgEl').src = data;
+      document.getElementById('debtImgPreview').style.display = 'flex';
+      document.getElementById('debtClearImgBtn').style.display = 'inline-flex';
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+});
+
+var debtClearImgBtn = document.getElementById('debtClearImgBtn');
+if(debtClearImgBtn) debtClearImgBtn.addEventListener('click', function(){
+  document.getElementById('debtImgData').value = '';
+  document.getElementById('debtImgEl').src = '';
+  document.getElementById('debtImgPreview').style.display = 'none';
+  this.style.display = 'none';
+});
+
+// Auto-update status based on amounts
+function autoStatus(){
+  var total  = parseFloat(document.getElementById('dTotal').value)||0;
+  var paid   = parseFloat(document.getElementById('dPaid').value)||0;
+  var sel    = document.getElementById('dStatus');
+  if(!sel) return;
+  if(paid<=0)            sel.value = 'unpaid';
+  else if(paid>=total)   sel.value = 'paid';
+  else                   sel.value = 'partial';
+}
+var dTotalEl = document.getElementById('dTotal');
+var dPaidEl  = document.getElementById('dPaid');
+if(dTotalEl) dTotalEl.addEventListener('input', autoStatus);
+if(dPaidEl)  dPaidEl.addEventListener('input', autoStatus);
+
+// ── Save debt ─────────────────────────────────────────────
+var saveDebtBtn = document.getElementById('saveDebtBtn');
+if(saveDebtBtn) saveDebtBtn.addEventListener('click', function(){
+  var supplier  = (document.getElementById('dSupplier').value||'').trim();
+  var invoiceNo = (document.getElementById('dInvoiceNo').value||'').trim();
+  var date      = (document.getElementById('dDate').value||'').trim();
+  var total     = parseFloat(document.getElementById('dTotal').value)||0;
+  var paidAmt   = parseFloat(document.getElementById('dPaid').value)||0;
+  var status    = (document.getElementById('dStatus').value||'unpaid');
+  var note      = (document.getElementById('dNote').value||'').trim();
+  var img       = document.getElementById('debtImgData').value||'';
+
+  if(!supplier||!date||total<=0){ toast('يرجى ملء الاسم والتاريخ والمبلغ','error'); return; }
+  if(paidAmt>total){ toast('المبلغ المسدّد أكبر من الإجمالي','error'); return; }
+
+  var record = {
+    supplier:supplier, invoiceNo:invoiceNo, date:date,
+    total:total, paidAmt:paidAmt, status:status, note:note, img:img,
+    updatedAt: new Date().toISOString()
+  };
+
+  if(editDebtId){
+    var idx = debts.findIndex(function(x){ return x.id===editDebtId; });
+    if(idx>=0) debts[idx] = Object.assign({id:editDebtId}, record);
+    toast('تم تحديث الدين','success');
+  } else {
+    record.id = uid();
+    record.createdAt = new Date().toISOString();
+    debts.push(record);
+    toast('تمت إضافة الدين بنجاح','success');
+  }
+
+  lsSet(KEYS.debts, debts);
+  closeModal('debtModal');
+  renderDebts();
+});
+
+// ── Mark paid ─────────────────────────────────────────────
+function markDebtPaid(id){
+  var d = debts.find(function(x){ return x.id===id; });
+  if(!d) return;
+  d.paidAmt = d.total;
+  d.status  = 'paid';
+  d.updatedAt = new Date().toISOString();
+  lsSet(KEYS.debts, debts);
+  renderDebts();
+  toast('تم تسديد الدين بالكامل ✓','success');
+}
+
+// ── Delete debt ───────────────────────────────────────────
+function deleteDebt(id){
+  if(!confirm('هل تريد حذف هذا الدين نهائياً؟')) return;
+  debts = debts.filter(function(x){ return x.id!==id; });
+  lsSet(KEYS.debts, debts);
+  renderDebts();
+  toast('تم حذف الدين','success');
+}
+
+// ── Lightbox ──────────────────────────────────────────────
+function openLightbox(id){
+  var d = debts.find(function(x){ return x.id===id; });
+  if(!d||!d.img) return;
+  var lb  = document.getElementById('imgLightbox');
+  var img = document.getElementById('lightboxImg');
+  if(!lb||!img) return;
+  img.src = d.img;
+  lb.classList.add('open');
+}
+function closeLightbox(){
+  var lb = document.getElementById('imgLightbox');
+  if(lb) lb.classList.remove('open');
+}
+var lbEl = document.getElementById('imgLightbox');
+if(lbEl) lbEl.addEventListener('click', function(e){
+  if(e.target===this) closeLightbox();
+});
+
+// ── Add debts to dashboard alerts ────────────────────────
+var _origBuildAlerts = buildAlerts;
+buildAlerts = function(){
+  var alerts = _origBuildAlerts();
+  var kpi = calcDebtKPIs();
+  if(kpi.unpaid>0){
+    var unpaidCount = debts.filter(function(d){ return d.status!=='paid'; }).length;
+    alerts.unshift({msg:'ديون غير مسدّدة: '+unpaidCount+' فاتورة — '+fmt(kpi.unpaid), type:'danger'});
+  }
+  return alerts;
+};
+
+// ── Firebase sync for debts ───────────────────────────────
+var _origLsSetDebts = lsSet;
+lsSet = function(k, v){
+  _origLsSetDebts(k, v);
+  // If debts key changed and Firebase available, push (without image data to save quota)
+  if(k === KEYS.debts && fbAvailable && fbAvailable()){
+    var slim = (v||[]).map(function(d){
+      var s = Object.assign({}, d);
+      // Don't sync base64 images to Firestore (too large) — store locally only
+      if(s.img && s.img.length > 500) s.img = ''; 
+      return s;
+    });
+    fbDb.collection('pharmacies').doc(fbCfg.projectId)
+      .collection('data').doc('debts')
+      .set({items:slim, updatedAt: new Date().toISOString()})
+      .catch(function(){});
+  }
+};
+
+// ── Restore debts from Firebase on sync ──────────────────
+var _origFbFullSync = typeof fbFullSync !== 'undefined' ? fbFullSync : null;
+if(_origFbFullSync){
+  fbFullSync = function(){
+    _origFbFullSync();
+    if(!fbAvailable || !fbAvailable()) return;
+    fbDb.collection('pharmacies').doc(fbCfg.projectId)
+      .collection('data').doc('debts').get()
+      .then(function(snap){
+        if(snap.exists && snap.data().items){
+          // Merge: keep local images, update the rest
+          var remote = snap.data().items;
+          remote.forEach(function(rd){
+            var local = debts.find(function(ld){ return ld.id===rd.id; });
+            if(local && local.img) rd.img = local.img; // preserve local image
+          });
+          debts = remote;
+          lsGet('pc_debts'); // refresh from merged
+          localStorage.setItem('pc_debts', JSON.stringify(debts));
+          if(curPage==='debts') renderDebts();
+        }
+      }).catch(function(){});
+  };
+}
+
+// ── Export: include debts in backup ──────────────────────
+var _origExportAll = typeof exportAll !== 'undefined' ? exportAll : null;
+// (exportAll reads from meds/sales/sett — we patch the import too)
+var _origImportJSON = importJSON;
+importJSON = function(file, full){
+  _origImportJSON(file, full);
+  // Also restore debts if present
+  if(full && file){
+    var r2 = new FileReader();
+    r2.onload = function(e){
+      try{
+        var data = JSON.parse(e.target.result);
+        if(data.debts){
+          data.debts.forEach(function(d){
+            if(!debts.find(function(x){ return x.id===d.id; })) debts.push(d);
+          });
+          localStorage.setItem('pc_debts', JSON.stringify(debts));
+          if(curPage==='debts') renderDebts();
+        }
+      }catch(err){}
+    };
+    r2.readAsText(file);
+  }
+};
+
 
 // ----------------------------------------------------------
 // BOTTOM NAV — sync active state with page changes
