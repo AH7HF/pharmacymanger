@@ -320,6 +320,32 @@ p{line-height:1.6}
 @keyframes tIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}
 @keyframes tOut{from{opacity:1}to{opacity:0;transform:translateX(-14px)}}
 
+
+/* ── SCANNER UPGRADES ─────────────────────────────────── */
+.scan-mode-tabs{display:flex;gap:0;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--rs);overflow:hidden;flex-shrink:0}
+.scan-tab{flex:1;padding:7px 10px;font-size:.76rem;font-weight:600;background:var(--surface2);color:var(--text2);cursor:pointer;transition:all var(--tr);font-family:var(--f);border:none;border-radius:0}
+.scan-tab.active{background:var(--accent);color:#fff}
+.scan-tab:not(.active):hover{background:var(--border)}
+.scan-upload-zone{border:2px dashed var(--border);border-radius:var(--rs);padding:18px 10px;text-align:center;cursor:pointer;transition:border-color var(--tr);font-size:.78rem;color:var(--text3);display:flex;flex-direction:column;align-items:center;gap:6px}
+.scan-upload-zone:hover{border-color:var(--accent);color:var(--accent)}
+.scan-upload-zone.dragover{border-color:var(--accent);background:rgba(37,99,235,.05)}
+.scan-upload-icon{font-size:1.6rem}
+.scan-result-preview{display:none;margin-top:6px;font-size:.77rem;background:var(--surface2);border-radius:var(--rs);padding:8px 10px;color:var(--text2);word-break:break-all;border:1px solid var(--border)}
+.scan-result-preview.show{display:block}
+.scan-status{font-size:.72rem;text-align:center;padding:5px 0;color:var(--text3);min-height:20px}
+.scan-status.active-scan{color:var(--accent);font-weight:600}
+.scan-status.found{color:var(--green);font-weight:700}
+.scan-status.error{color:var(--red)}
+.scan-box-inner{position:relative;background:#000;border-radius:var(--rs);overflow:hidden;flex-shrink:0}
+.scan-box-inner video,.scan-box-inner canvas.scan-preview-canvas{width:100%;height:200px;object-fit:cover;display:block}
+.scan-corner{position:absolute;width:20px;height:20px;border-color:#60a5fa;border-style:solid;pointer-events:none}
+.scan-corner.tl{top:10px;right:10px;border-width:3px 0 0 3px;border-radius:3px 0 0 3px}
+.scan-corner.tr{top:10px;left:10px;border-width:3px 3px 0 0;border-radius:0 3px 0 0}
+.scan-corner.bl{bottom:10px;right:10px;border-width:0 0 3px 3px;border-radius:0 0 0 3px}
+.scan-corner.br{bottom:10px;left:10px;border-width:0 3px 3px 0;border-radius:0 0 3px 0}
+.scan-flash{position:absolute;inset:0;background:rgba(255,255,255,.55);pointer-events:none;opacity:0;transition:opacity .15s}
+.scan-flash.flash{opacity:1}
+
 /* ── PRINT: handled via popup window in JS — no CSS needed here ── */
 
 /* ══════════════════════════════════════════════════════
@@ -465,6 +491,7 @@ p{line-height:1.6}
   .topbar-phname{font-size:.75rem}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
 
@@ -597,13 +624,32 @@ p{line-height:1.6}
         <div class="pos-left">
           <div class="pos-srow">
             <input type="text" id="posSearch" placeholder="ابحث عن دواء أو أدخل الباركود…"/>
-            <button class="btn btn-secondary" id="posScanBtn">📷 مسح</button>
+            <button class="btn btn-secondary" id="posScanBtn">📷 مسح / QR</button>
           </div>
-          <div id="posScanBox" class="scan-box" style="display:none">
-            <div id="posScanner" style="height:200px;overflow:hidden;position:relative">
-              <div class="scan-line"></div>
+          <div id="posScanBox" style="display:none;background:var(--surface2);border-radius:var(--rs);padding:10px;margin-top:4px;flex-direction:column;gap:8px">
+            <div class="scan-mode-tabs">
+              <button class="scan-tab active" id="posTabCamera" onclick="scanSwitchTab('pos','camera')">📷 كاميرا</button>
+              <button class="scan-tab" id="posTabUpload" onclick="scanSwitchTab('pos','upload')">🖼 صورة</button>
             </div>
-            <button class="btn btn-sm btn-danger scan-stop-btn" id="posStopBtn">إيقاف الكاميرا</button>
+            <div id="posCameraPanel">
+              <div class="scan-box-inner">
+                <div id="posScanner" style="height:200px;overflow:hidden;position:relative"></div>
+                <div class="scan-line"></div>
+                <div class="scan-corner tl"></div><div class="scan-corner tr"></div>
+                <div class="scan-corner bl"></div><div class="scan-corner br"></div>
+                <div class="scan-flash" id="posFlash"></div>
+              </div>
+              <div class="scan-status" id="posScanStatus">في انتظار الكاميرا…</div>
+              <button class="btn btn-sm btn-danger" id="posStopBtn" style="width:100%;margin-top:4px">إيقاف الكاميرا</button>
+            </div>
+            <div id="posUploadPanel" style="display:none">
+              <label class="scan-upload-zone" id="posUploadZone" for="posUploadFile">
+                <span class="scan-upload-icon">🖼</span>
+                <span>اضغط أو اسحب صورة تحتوي باركود أو QR</span>
+                <input type="file" id="posUploadFile" accept="image/*" style="display:none">
+              </label>
+              <div class="scan-result-preview" id="posUploadResult"></div>
+            </div>
           </div>
           <div class="pos-results" id="posResults">
             <p class="empty" style="grid-column:1/-1">ابحث عن دواء لإضافته إلى السلة.</p>
@@ -710,12 +756,31 @@ p{line-height:1.6}
     <div class="modal-hdr"><h2 id="medModalTitle">إضافة دواء</h2><button class="m-close" data-close="medModal">✕</button></div>
     <div class="modal-body">
       <div style="margin-bottom:4px">
-        <button class="btn btn-sm btn-secondary" id="medScanBtn">📷 مسح الباركود بالكاميرا</button>
-        <div id="medScanBox" class="scan-box" style="display:none">
-          <div id="medScanner" style="height:190px;overflow:hidden;position:relative">
-            <div class="scan-line"></div>
+        <button class="btn btn-sm btn-secondary" id="medScanBtn">📷 مسح الباركود / QR</button>
+        <div id="medScanBox" style="display:none;background:var(--surface2);border-radius:var(--rs);padding:10px;margin-top:8px;display:none;flex-direction:column;gap:8px">
+          <div class="scan-mode-tabs">
+            <button class="scan-tab active" id="medTabCamera" onclick="scanSwitchTab('med','camera')">📷 كاميرا</button>
+            <button class="scan-tab" id="medTabUpload" onclick="scanSwitchTab('med','upload')">🖼 صورة</button>
           </div>
-          <button class="btn btn-sm btn-danger scan-stop-btn" id="medStopBtn">إيقاف الكاميرا</button>
+          <div id="medCameraPanel">
+            <div class="scan-box-inner" id="medScanBoxInner">
+              <div id="medScanner" style="height:190px;overflow:hidden;position:relative"></div>
+              <div class="scan-line"></div>
+              <div class="scan-corner tl"></div><div class="scan-corner tr"></div>
+              <div class="scan-corner bl"></div><div class="scan-corner br"></div>
+              <div class="scan-flash" id="medFlash"></div>
+            </div>
+            <div class="scan-status" id="medScanStatus">في انتظار الكاميرا…</div>
+            <button class="btn btn-sm btn-danger" id="medStopBtn" style="width:100%;margin-top:4px">إيقاف الكاميرا</button>
+          </div>
+          <div id="medUploadPanel" style="display:none">
+            <label class="scan-upload-zone" id="medUploadZone" for="medUploadFile">
+              <span class="scan-upload-icon">🖼</span>
+              <span>اضغط أو اسحب صورة تحتوي باركود أو QR</span>
+              <input type="file" id="medUploadFile" accept="image/*" style="display:none">
+            </label>
+            <div class="scan-result-preview" id="medUploadResult"></div>
+          </div>
         </div>
       </div>
       <div class="f-grid">
@@ -1143,27 +1208,10 @@ document.getElementById('confirmDelBtn').addEventListener('click',function(){
 });
 
 // ----------------------------------------------------------
-// 11b. BARCODE SCANNER — fully inline, zero external dependencies
-// Reads EAN-13, EAN-8, UPC-A, UPC-E, Code-128, Code-39 from camera
-// Uses: getUserMedia (permission dialog) + BarcodeDetector (Chrome/Edge/Safari)
-// Fallback: pure-JS EAN/UPC decoder reading canvas frames
-// Works offline, no CDN required.
-// ----------------------------------------------------------
-
-var scanActive   = false;
-var scanStream   = null;
-var scanRafId    = null;
-var scanCallback = null;
-var scanVideo    = null;
-var scanCanvas   = document.createElement('canvas');
-var scanCtx      = scanCanvas.getContext('2d');
-var scanBoxShown = null;
-
-// ── BARCODE SCANNER ───────────────────────────────────────
-// Self-contained EAN-13 / EAN-8 / UPC-A decoder + camera
-// No external libraries. Uses:
-//  1) BarcodeDetector API (Chrome/Edge/Safari) — when available
-//  2) Pure-JS pixel-level EAN decoder — universal fallback
+// 11b. BARCODE + QR SCANNER — jsQR + BarcodeDetector + pure-JS EAN fallback
+// No external scan websites. Works fully offline after page load.
+// Supports: EAN-13, EAN-8, UPC-A/E, Code-128, Code-39, QR codes, DataMatrix
+// Image upload mode: drop or pick any image → scan instantly
 // ----------------------------------------------------------
 
 var scanActive=false, scanStream=null, scanRafId=null;
@@ -1171,140 +1219,100 @@ var scanCallback=null, scanVideo=null, scanBoxShown=null;
 var _scanCvs=document.createElement('canvas');
 var _scanCtx=_scanCvs.getContext('2d');
 
-// Native BarcodeDetector setup
+// Native BarcodeDetector
 var _bd=null;
 if(window.BarcodeDetector){
-  try{
-    _bd=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','code_39','qr_code','data_matrix','itf']});
-  }catch(e){ _bd=null; }
+  try{ _bd=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','code_39','qr_code','data_matrix','itf']}); }
+  catch(e){ _bd=null; }
 }
 
-// ── EAN / UPC lookup tables ─────────────────────────────────
+// ── EAN lookup tables ───────────────────────────────────
 var _EL={'0001101':0,'0011001':1,'0010011':2,'0111101':3,'0100011':4,'0110001':5,'0101111':6,'0111011':7,'0110111':8,'0001011':9};
 var _EG={'0100111':0,'0110011':1,'0011011':2,'0100001':3,'0011101':4,'0111001':5,'0000101':6,'0010001':7,'0001001':8,'0010111':9};
 var _ER={'1110010':0,'1100110':1,'1101100':2,'1000010':3,'1011100':4,'1001110':5,'1010000':6,'1000100':7,'1001000':8,'1110100':9};
-// EAN-13 first digit from left parity pattern
 var _FD=['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
 
-// ── EAN checksum validator ──────────────────────────────────
 function _eanCheck(s){
   var sum=0;
   for(var i=0;i<s.length-1;i++) sum+=parseInt(s[i])*(i%2===(s.length===13?0:1)?1:3);
   return (10-(sum%10))%10===parseInt(s[s.length-1]);
 }
 
-// ── Core row decoder ────────────────────────────────────────
-function _decodeRow(pixels, w){
-  // 1. Build luminance array
+function _decodeRow(pixels,w){
   var lum=new Float32Array(w);
-  for(var x=0;x<w;x++){
-    var p=x*4;
-    lum[x]=pixels[p]*0.299+pixels[p+1]*0.587+pixels[p+2]*0.114;
-  }
-  // 2. Local-mean binarize (window = w/10)
+  for(var x=0;x<w;x++){var p=x*4;lum[x]=pixels[p]*0.299+pixels[p+1]*0.587+pixels[p+2]*0.114;}
   var win=Math.max(5,Math.floor(w/10));
   var bin=new Uint8Array(w);
-  // Prefix sum for speed
   var psum=new Float64Array(w+1);
   for(var i=0;i<w;i++) psum[i+1]=psum[i]+lum[i];
   for(var x=0;x<w;x++){
-    var lo=Math.max(0,x-win), hi=Math.min(w-1,x+win);
+    var lo=Math.max(0,x-win),hi=Math.min(w-1,x+win);
     var mean=(psum[hi+1]-psum[lo])/(hi-lo+1);
     bin[x]=lum[x]<mean*0.88?1:0;
   }
-  // 3. Run-length encode
-  var runs=[];
-  var cur=bin[0], cnt=1;
-  for(var i=1;i<w;i++){
-    if(bin[i]===cur){ cnt++; }
-    else{ runs.push(cur,cnt); cur=bin[i]; cnt=1; }
-  }
+  var runs=[]; var cur=bin[0],cnt=1;
+  for(var i=1;i<w;i++){if(bin[i]===cur){cnt++;}else{runs.push(cur,cnt);cur=bin[i];cnt=1;}}
   runs.push(cur,cnt);
-  // runs[i*2]=value(0/1), runs[i*2+1]=count
   var nr=runs.length/2;
-
-  // 4. Search for start guard (B W B) and decode
   for(var si=0;si<nr-55;si++){
-    if(runs[si*2]!==1) continue;          // must start dark
-    // Estimate unit = average of first 3 guard elements
+    if(runs[si*2]!==1) continue;
     var u3=(runs[si*2+1]+runs[(si+1)*2+1]+runs[(si+2)*2+1])/3;
     if(u3<1) continue;
-
-    // Helper: read n modules from run position ri
-    function readModules(ri, n){
-      var bits='', remaining=n;
-      while(remaining>0 && ri<nr){
-        var v=runs[ri*2], c=runs[ri*2+1];
-        var take=Math.min(remaining, Math.round(c/u3));
-        if(take<1) take=1;
-        for(var b=0;b<take;b++) bits+=v;
-        remaining-=take; ri++;
-      }
+    function readModules(ri,n){
+      var bits='',remaining=n;
+      while(remaining>0&&ri<nr){var v=runs[ri*2],c=runs[ri*2+1];var take=Math.min(remaining,Math.round(c/u3));if(take<1)take=1;for(var b=0;b<take;b++)bits+=v;remaining-=take;ri++;}
       return bits.length===n?bits:null;
     }
-
-    // Start guard = 1,0,1 (3 modules each 1 unit)
-    var s0=readModules(si,3);
-    if(!s0||s0!=='101') continue;
-
-    var ri=si+3; // skip 3 elements of start guard (3 runs consumed above is wrong—guard is exactly 3 runs)
-    // More precisely: start guard occupies runs[si],runs[si+1],runs[si+2]
-    // Each should be ~1 unit wide
-    ri=si+3;
-
-    // Decode 6 left digits (7 modules each)
-    var leftDigits='', parity='', ok=true;
+    var s0=readModules(si,3); if(!s0||s0!=='101') continue;
+    var ri=si+3;
+    var leftDigits='',parity='',ok=true;
     for(var d=0;d<6&&ok;d++){
-      // Each digit = 4 runs = 7 modules
       var mods='';
-      for(var k=0;k<4&&ri<nr;k++,ri++){
-        var cnt2=runs[ri*2+1];
-        var n2=Math.max(1,Math.min(4,Math.round(cnt2/u3)));
-        for(var b=0;b<n2;b++) mods+=''+runs[ri*2];
-      }
+      for(var k=0;k<4&&ri<nr;k++,ri++){var cnt2=runs[ri*2+1];var n2=Math.max(1,Math.min(4,Math.round(cnt2/u3)));for(var b=0;b<n2;b++)mods+=''+runs[ri*2];}
       if(mods.length!==7){ok=false;break;}
-      if(_EL[mods]!==undefined){ leftDigits+=_EL[mods]; parity+='L'; }
-      else if(_EG[mods]!==undefined){ leftDigits+=_EG[mods]; parity+='G'; }
+      if(_EL[mods]!==undefined){leftDigits+=_EL[mods];parity+='L';}
+      else if(_EG[mods]!==undefined){leftDigits+=_EG[mods];parity+='G';}
       else{ok=false;break;}
     }
     if(!ok||leftDigits.length!==6) continue;
-
-    // Middle guard = 0,1,0,1,0 (5 runs)
     ri+=5;
-
-    // Decode 6 right digits
     var rightDigits='';
     for(var d2=0;d2<6&&ok;d2++){
       var mods2='';
-      for(var k2=0;k2<4&&ri<nr;k2++,ri++){
-        var cnt3=runs[ri*2+1];
-        var n3=Math.max(1,Math.min(4,Math.round(cnt3/u3)));
-        for(var b2=0;b2<n3;b2++) mods2+=''+runs[ri*2];
-      }
+      for(var k2=0;k2<4&&ri<nr;k2++,ri++){var cnt3=runs[ri*2+1];var n3=Math.max(1,Math.min(4,Math.round(cnt3/u3)));for(var b2=0;b2<n3;b2++)mods2+=''+runs[ri*2];}
       if(mods2.length!==7){ok=false;break;}
-      if(_ER[mods2]!==undefined) rightDigits+=_ER[mods2];
+      if(_ER[mods2]!==undefined)rightDigits+=_ER[mods2];
       else{ok=false;break;}
     }
     if(!ok||rightDigits.length!==6) continue;
-
-    // Determine first digit from parity (EAN-13)
-    var fd=-1;
-    for(var pi=0;pi<10;pi++) if(_FD[pi]===parity){fd=pi;break;}
-
+    var fd=-1; for(var pi=0;pi<10;pi++) if(_FD[pi]===parity){fd=pi;break;}
     var code=(fd>=0?''+fd:'')+leftDigits+rightDigits;
     if((code.length===12||code.length===13)&&_eanCheck(code)) return code;
   }
   return null;
 }
 
-// ── Decode one video frame (try multiple rows) ──────────────
+// ── Try jsQR on a canvas context ─────────────────────────
+function _tryJsQR(ctx, w, h){
+  if(typeof jsQR==='undefined') return null;
+  try{
+    var imgData=ctx.getImageData(0,0,w,h);
+    var res=jsQR(imgData.data,w,h,{inversionAttempts:'attemptBoth'});
+    return res?res.data:null;
+  }catch(e){ return null; }
+}
+
+// ── Decode one video frame ───────────────────────────────
 function _decodeFrame(){
   if(!scanVideo||scanVideo.readyState<2) return null;
-  var w=scanVideo.videoWidth, h=scanVideo.videoHeight;
+  var w=scanVideo.videoWidth,h=scanVideo.videoHeight;
   if(!w||!h) return null;
   _scanCvs.width=w; _scanCvs.height=h;
   _scanCtx.drawImage(scanVideo,0,0,w,h);
-  // Sample 9 horizontal rows spread across middle of frame
+  // Try jsQR first (handles QR + barcodes via library)
+  var qr=_tryJsQR(_scanCtx,w,h);
+  if(qr) return qr;
+  // Pure-JS EAN fallback
   var fracs=[.35,.40,.45,.50,.55,.60,.65,.42,.58];
   for(var fi=0;fi<fracs.length;fi++){
     var y=Math.floor(h*fracs[fi]);
@@ -1315,38 +1323,52 @@ function _decodeFrame(){
   return null;
 }
 
-// ── Scan loop ───────────────────────────────────────────────
+// ── Scan loop ────────────────────────────────────────────
 function scanLoop(){
-  if(!scanActive){return;}
-  if(!scanVideo||scanVideo.readyState<2){
-    scanRafId=requestAnimationFrame(scanLoop); return;
-  }
+  if(!scanActive) return;
+  if(!scanVideo||scanVideo.readyState<2){scanRafId=requestAnimationFrame(scanLoop);return;}
   if(_bd){
     _bd.detect(scanVideo).then(function(r){
       if(!scanActive) return;
       if(r&&r.length>0){
         var code=r[0].rawValue;
-        var cb=scanCallback; stopScanner(); if(cb)cb(code);
+        var cb=scanCallback; stopScanner(); _flashScan(scanBoxShown); if(cb)cb(code);
       } else {
-        // Also try JS decoder as second opinion
         var code2=_decodeFrame();
-        if(code2&&scanActive){ var cb2=scanCallback; stopScanner(); if(cb2)cb2(code2); }
+        if(code2&&scanActive){var cb2=scanCallback;stopScanner();_flashScan(scanBoxShown);if(cb2)cb2(code2);}
         else if(scanActive) scanRafId=requestAnimationFrame(scanLoop);
       }
     }).catch(function(){
       if(!scanActive) return;
       var code=_decodeFrame();
-      if(code){ var cb=scanCallback; stopScanner(); if(cb)cb(code); }
+      if(code){var cb=scanCallback;stopScanner();_flashScan(scanBoxShown);if(cb)cb(code);}
       else scanRafId=requestAnimationFrame(scanLoop);
     });
   } else {
     var code=_decodeFrame();
-    if(code){ var cb=scanCallback; stopScanner(); if(cb)cb(code); }
+    if(code){var cb=scanCallback;stopScanner();_flashScan(scanBoxShown);if(cb)cb(code);}
     else scanRafId=requestAnimationFrame(scanLoop);
   }
 }
 
-// ── Stop ────────────────────────────────────────────────────
+// ── Flash feedback ───────────────────────────────────────
+function _flashScan(boxId){
+  var flashId = boxId==='medScanBox'?'medFlash':'posFlash';
+  var el=document.getElementById(flashId);
+  if(!el) return;
+  el.classList.add('flash');
+  setTimeout(function(){el.classList.remove('flash');},150);
+}
+
+// ── Update status label ──────────────────────────────────
+function setScanStatus(boxId, msg, cls){
+  var statusId = boxId==='medScanBox'?'medScanStatus':'posScanStatus';
+  var el=document.getElementById(statusId); if(!el) return;
+  el.textContent=msg;
+  el.className='scan-status'+(cls?' '+cls:'');
+}
+
+// ── Stop scanner ─────────────────────────────────────────
 function stopScanner(){
   scanActive=false; scanCallback=null;
   if(scanRafId){cancelAnimationFrame(scanRafId);scanRafId=null;}
@@ -1355,13 +1377,14 @@ function stopScanner(){
   if(scanBoxShown){var b=document.getElementById(scanBoxShown);if(b)b.style.display='none';scanBoxShown=null;}
 }
 
-// ── Start ────────────────────────────────────────────────────
+// ── Start camera scanner ─────────────────────────────────
 function startScanner(outerBoxId,videoContainerId,onDetect){
   stopScanner();
   scanCallback=onDetect;
   scanBoxShown=outerBoxId;
   var box=document.getElementById(outerBoxId);
-  if(box) box.style.display='block';
+  if(box){box.style.display='flex';}
+  setScanStatus(outerBoxId,'جارٍ فتح الكاميرا…','active-scan');
   navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}}})
   .then(function(stream){
     scanStream=stream; scanActive=true;
@@ -1369,56 +1392,186 @@ function startScanner(outerBoxId,videoContainerId,onDetect){
     if(!ct){stopScanner();return;}
     ct.innerHTML='';
     var vid=document.createElement('video');
-    vid.setAttribute('playsinline',''); vid.setAttribute('autoplay','');
+    vid.setAttribute('playsinline','');vid.setAttribute('autoplay','');
     vid.muted=true;
     vid.style.cssText='width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;background:#000';
     ct.appendChild(vid); scanVideo=vid;
     vid.srcObject=stream;
-    vid.play().then(function(){scanRafId=requestAnimationFrame(scanLoop);})
-              .catch(function(){toast('تعذّر تشغيل الكاميرا','error');stopScanner();});
+    vid.play().then(function(){
+      setScanStatus(outerBoxId,'جارٍ البحث عن كود…','active-scan');
+      scanRafId=requestAnimationFrame(scanLoop);
+    }).catch(function(){toast('تعذّر تشغيل الكاميرا','error');stopScanner();});
   }).catch(function(err){
     var msg='تعذّر فتح الكاميرا';
-    if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError') msg='رُفض إذن الكاميرا — اسمح بالوصول من إعدادات المتصفح.';
+    if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError') msg='رُفض إذن الكاميرا — اسمح من إعدادات المتصفح.';
     else if(err.name==='NotFoundError') msg='لا توجد كاميرا في هذا الجهاز.';
     else if(err.name==='NotReadableError') msg='الكاميرا مستخدمة من تطبيق آخر.';
+    setScanStatus(outerBoxId, msg, 'error');
     toast(msg,'error'); stopScanner();
   });
 }
 
-// ── Wire: Medicine modal ───────────────────────────────────
-// ── Wire: Medicine modal ───────────────────────────────────
-var medScanBtn = document.getElementById('medScanBtn');
-if(medScanBtn) medScanBtn.addEventListener('click', function(){
-  startScanner('medScanBox', 'medScanner', function(code){
-    var el = document.getElementById('mBarcode'); if(el) el.value = code;
-    var found = null;
-    for(var i=0;i<meds.length;i++){ if(meds[i].barcode===code){ found=meds[i]; break; } }
-    toast(found ? 'تم العثور على: '+found.name : 'تم مسح الباركود: '+code, found?'info':'success');
-  });
-});
-var medStopBtn = document.getElementById('medStopBtn');
-if(medStopBtn) medStopBtn.addEventListener('click', stopScanner);
+// ── Tab switcher (camera / upload) ──────────────────────
+function scanSwitchTab(which, tab){
+  var prefix = which==='med'?'med':'pos';
+  var camTab=document.getElementById(prefix+'TabCamera');
+  var upTab=document.getElementById(prefix+'TabUpload');
+  var camPanel=document.getElementById(prefix+'CameraPanel');
+  var upPanel=document.getElementById(prefix+'UploadPanel');
+  if(tab==='camera'){
+    if(camTab)camTab.classList.add('active'); if(upTab)upTab.classList.remove('active');
+    if(camPanel)camPanel.style.display='block'; if(upPanel)upPanel.style.display='none';
+  } else {
+    if(upTab)upTab.classList.add('active'); if(camTab)camTab.classList.remove('active');
+    if(upPanel)upPanel.style.display='block'; if(camPanel)camPanel.style.display='none';
+    stopScanner();
+  }
+}
 
-// ── Wire: POS ──────────────────────────────────────────────
-var posScanBtn = document.getElementById('posScanBtn');
-if(posScanBtn) posScanBtn.addEventListener('click', function(){
-  startScanner('posScanBox', 'posScanner', function(code){
-    var found = null;
-    for(var i=0;i<meds.length;i++){ if(meds[i].barcode===code){ found=meds[i]; break; } }
-    if(found){
-      addToCart(found.id);
-      var ps = document.getElementById('posSearch'); if(ps) ps.value = '';
-      renderPosGrid('');
-      toast('تمت الإضافة: '+found.name, 'success');
-    } else {
-      var ps2 = document.getElementById('posSearch'); if(ps2) ps2.value = code;
-      renderPosGrid(code);
-      toast('لم يُعثر على دواء بهذا الباركود: '+code, 'warn');
-    }
+// ── Image upload scanner ─────────────────────────────────
+function scanImageFile(file, resultElemId, onDetect){
+  if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var MAX=800;
+      var scale=Math.min(1,MAX/Math.max(img.width,img.height));
+      var cvs=document.createElement('canvas');
+      cvs.width=img.width*scale; cvs.height=img.height*scale;
+      var ctx=cvs.getContext('2d');
+      ctx.drawImage(img,0,0,cvs.width,cvs.height);
+      var found=null;
+      // 1. jsQR
+      found=_tryJsQR(ctx,cvs.width,cvs.height);
+      // 2. Pure EAN rows
+      if(!found){
+        var fracs=[.3,.35,.4,.45,.5,.55,.6,.65,.7];
+        for(var fi=0;fi<fracs.length&&!found;fi++){
+          var y=Math.floor(cvs.height*fracs[fi]);
+          var row=ctx.getImageData(0,y,cvs.width,1).data;
+          found=_decodeRow(row,cvs.width);
+        }
+      }
+      // 3. BarcodeDetector on image bitmap
+      if(!found&&_bd&&window.createImageBitmap){
+        createImageBitmap(img).then(function(bmp){
+          _bd.detect(bmp).then(function(r){
+            if(r&&r.length>0){
+              var code=r[0].rawValue;
+              showUploadResult(resultElemId,code,true);
+              onDetect(code);
+            } else {
+              showUploadResult(resultElemId,'لم يتم التعرف على أي كود في الصورة.',false);
+            }
+          }).catch(function(){
+            showUploadResult(resultElemId,'لم يتم التعرف على أي كود في الصورة.',false);
+          });
+        });
+        return;
+      }
+      if(found){
+        showUploadResult(resultElemId, found, true);
+        onDetect(found);
+      } else {
+        showUploadResult(resultElemId,'لم يتم التعرف على أي كود في الصورة.',false);
+      }
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function showUploadResult(elemId, text, success){
+  var el=document.getElementById(elemId); if(!el) return;
+  el.textContent = success ? ('✓ ' + text) : ('✗ ' + text);
+  el.style.color = success ? 'var(--green)' : 'var(--red)';
+  el.classList.add('show');
+  if(!success) setTimeout(function(){el.classList.remove('show');},3000);
+}
+
+// ── Wire upload drag-and-drop ─────────────────────────────
+function _wireUploadZone(zoneId, fileInputId, resultId, onDetect){
+  var zone=document.getElementById(zoneId);
+  var fi=document.getElementById(fileInputId);
+  if(!zone||!fi) return;
+  fi.addEventListener('change',function(){ if(this.files[0]) scanImageFile(this.files[0],resultId,onDetect); this.value=''; });
+  zone.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('dragover');});
+  zone.addEventListener('dragleave',function(){this.classList.remove('dragover');});
+  zone.addEventListener('drop',function(e){
+    e.preventDefault();this.classList.remove('dragover');
+    var file=e.dataTransfer.files[0];
+    if(file&&file.type.startsWith('image/')) scanImageFile(file,resultId,onDetect);
   });
+}
+
+// ── Wire: Medicine modal ─────────────────────────────────
+function _onMedScan(code){
+  var el=document.getElementById('mBarcode'); if(el) el.value=code;
+  var found=null;
+  for(var i=0;i<meds.length;i++){ if(meds[i].barcode===code){found=meds[i];break;} }
+  setScanStatus('medScanBox', found?('✓ '+found.name):'✓ '+code, 'found');
+  toast(found?'تم العثور على: '+found.name:'تم مسح الكود: '+code, found?'info':'success');
+  // Close scan box after 800ms so user sees the result
+  setTimeout(function(){
+    var b=document.getElementById('medScanBox'); if(b)b.style.display='none';
+  }, 800);
+}
+
+var medScanBtn=document.getElementById('medScanBtn');
+if(medScanBtn) medScanBtn.addEventListener('click',function(){
+  var box=document.getElementById('medScanBox');
+  if(box&&box.style.display==='flex'){stopScanner();box.style.display='none';return;}
+  scanSwitchTab('med','camera');
+  startScanner('medScanBox','medScanner',_onMedScan);
 });
-var posStopBtn = document.getElementById('posStopBtn');
-if(posStopBtn) posStopBtn.addEventListener('click', stopScanner);
+var medStopBtn=document.getElementById('medStopBtn');
+if(medStopBtn) medStopBtn.addEventListener('click',function(){
+  stopScanner();
+  var b=document.getElementById('medScanBox'); if(b)b.style.display='none';
+});
+// Wire upload for medicine modal
+_wireUploadZone('medUploadZone','medUploadFile','medUploadResult',function(code){
+  _onMedScan(code);
+});
+
+// ── Wire: POS ────────────────────────────────────────────
+function _onPosScan(code){
+  var found=null;
+  for(var i=0;i<meds.length;i++){ if(meds[i].barcode===code){found=meds[i];break;} }
+  if(found){
+    addToCart(found.id);
+    var ps=document.getElementById('posSearch'); if(ps) ps.value='';
+    renderPosGrid('');
+    setScanStatus('posScanBox','✓ '+found.name,'found');
+    toast('تمت الإضافة: '+found.name,'success');
+  } else {
+    var ps2=document.getElementById('posSearch'); if(ps2) ps2.value=code;
+    renderPosGrid(code);
+    setScanStatus('posScanBox','⚠ لم يُعثر على دواء','error');
+    toast('لم يُعثر على دواء بهذا الكود: '+code,'warn');
+  }
+  setTimeout(function(){
+    var b=document.getElementById('posScanBox'); if(b)b.style.display='none';
+  }, 1000);
+}
+
+var posScanBtn=document.getElementById('posScanBtn');
+if(posScanBtn) posScanBtn.addEventListener('click',function(){
+  var box=document.getElementById('posScanBox');
+  if(box&&box.style.display==='flex'){stopScanner();box.style.display='none';return;}
+  scanSwitchTab('pos','camera');
+  startScanner('posScanBox','posScanner',_onPosScan);
+});
+var posStopBtn=document.getElementById('posStopBtn');
+if(posStopBtn) posStopBtn.addEventListener('click',function(){
+  stopScanner();
+  var b=document.getElementById('posScanBox'); if(b)b.style.display='none';
+});
+// Wire upload for POS
+_wireUploadZone('posUploadZone','posUploadFile','posUploadResult',function(code){
+  _onPosScan(code);
+});
 // ----------------------------------------------------------
 // 12. POS  (search + barcode entry + camera scan)
 // ----------------------------------------------------------
