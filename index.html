@@ -503,6 +503,88 @@ body.pwa-standalone .toast-c{
 .bn-item:active{opacity:.7}
 
 
+
+/* ── CUSTOMER DEBTS ─────────────────────────────────── */
+.cust-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.cust-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);text-align:center}
+.cust-kpi.cr{border-color:rgba(220,38,38,.3)}
+.cust-kpi.cw{border-color:rgba(217,119,6,.3)}
+.cust-kpi.cg{border-color:rgba(22,163,74,.3)}
+.cust-kpi.cb{border-color:rgba(37,99,235,.3)}
+.cust-kv{display:block;font-size:1.2rem;font-weight:700;font-family:var(--m);direction:ltr;margin-bottom:3px}
+.cust-kpi.cr .cust-kv{color:var(--red)}
+.cust-kpi.cw .cust-kv{color:var(--yellow)}
+.cust-kpi.cg .cust-kv{color:var(--green)}
+.cust-kpi.cb .cust-kv{color:var(--blue)}
+.cust-kl{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text3)}
+
+/* Search + filter bar */
+.cust-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.cust-search{flex:1;min-width:160px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--rs);background:var(--surface);color:var(--text);font-size:.83rem;font-family:var(--f);transition:border-color var(--tr)}
+.cust-search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.cust-sort{padding:8px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--surface);color:var(--text);font-size:.8rem;font-family:var(--f);cursor:pointer}
+
+/* Customer cards grid */
+.cust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.cust-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;cursor:pointer;transition:all .18s;box-shadow:var(--sh);position:relative;overflow:hidden}
+.cust-card::before{content:'';position:absolute;top:0;right:0;left:0;height:3px;background:var(--border)}
+.cust-card.has-debt::before{background:var(--yellow)}
+.cust-card.over-limit::before{background:var(--red)}
+.cust-card.all-paid::before{background:var(--green)}
+.cust-card:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:var(--accent)}
+.cust-card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cust-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;flex-shrink:0;background:rgba(37,99,235,.12);color:var(--blue);border:1.5px solid rgba(37,99,235,.2)}
+.cust-card.over-limit .cust-avatar{background:rgba(220,38,38,.12);color:var(--red);border-color:rgba(220,38,38,.3)}
+.cust-card.all-paid .cust-avatar{background:rgba(22,163,74,.12);color:var(--green);border-color:rgba(22,163,74,.3)}
+.cust-name{font-weight:700;font-size:.9rem;flex:1;line-height:1.3}
+.cust-phone{font-size:.72rem;color:var(--text3);font-family:var(--m);direction:ltr;margin-top:1px}
+.cust-warn-badge{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:8px;letter-spacing:.03em}
+.cust-stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cust-stat{background:var(--surface2);border-radius:var(--rs);padding:7px 10px}
+.cust-stat-lbl{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text3);margin-bottom:2px}
+.cust-stat-val{font-size:.82rem;font-weight:700;font-family:var(--m);direction:ltr;color:var(--text)}
+.cust-stat-val.red{color:var(--red)}
+.cust-stat-val.green{color:var(--green)}
+.cust-actions{display:flex;gap:5px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
+
+/* ── CUSTOMER DETAIL VIEW ─── */
+.cust-detail-header{display:flex;align-items:center;gap:12px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:16px;box-shadow:var(--sh)}
+.cust-detail-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;flex-shrink:0;background:rgba(37,99,235,.12);color:var(--blue);border:2px solid rgba(37,99,235,.2)}
+.cust-detail-info{flex:1}
+.cust-detail-name{font-size:1.1rem;font-weight:700;margin-bottom:2px}
+.cust-detail-meta{font-size:.75rem;color:var(--text2)}
+.cust-debt-limit-bar{margin:12px 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px}
+.cust-limit-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:.78rem}
+.cust-limit-track{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+.cust-limit-fill{height:100%;border-radius:4px;transition:width .4s ease;background:var(--green)}
+.cust-limit-fill.warn{background:var(--yellow)}
+.cust-limit-fill.danger{background:var(--red)}
+
+/* Transactions table inside customer detail */
+.cust-tx-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cust-tx-head h3{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text2)}
+
+/* Transaction card */
+.tx-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);margin-bottom:8px;overflow:hidden}
+.tx-card.tx-paid{border-right:3px solid var(--green);opacity:.8}
+.tx-card.tx-unpaid{border-right:3px solid var(--red)}
+.tx-card.tx-partial{border-right:3px solid var(--yellow)}
+.tx-row{display:flex;align-items:center;justify-content:space-between;padding:10px 13px;flex-wrap:wrap;gap:6px}
+.tx-date{font-size:.72rem;color:var(--text3);font-family:var(--m)}
+.tx-amount{font-family:var(--m);font-weight:700;font-size:.88rem;color:var(--red)}
+.tx-amount.paid{color:var(--green)}
+.tx-items-preview{padding:0 13px 9px;font-size:.74rem;color:var(--text2);line-height:1.6}
+.tx-actions{display:flex;gap:5px;padding:8px 13px;border-top:1px solid var(--border);background:var(--surface2)}
+
+/* Back button */
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);font-size:.8rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all var(--tr);margin-bottom:14px;font-family:var(--f)}
+.back-btn:hover{color:var(--text);border-color:var(--accent)}
+
+@media(max-width:640px){
+  .cust-summary-grid{grid-template-columns:1fr 1fr}
+  .cust-grid{grid-template-columns:1fr}
+}
+
 /* ── DEBTS PAGE ──────────────────────────────────────── */
 .debt-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
 .debt-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:15px 18px;box-shadow:var(--sh)}
@@ -868,7 +950,8 @@ body.pwa-standalone .toast-c{
     <div class="nav-item" data-page="pos"><span class="nav-icon">⊞</span><span data-i18n="pointOfSale">نقطة البيع</span></div>
     <div class="nav-item" data-page="inventory"><span class="nav-icon">▤</span><span data-i18n="inventory">المخزون</span></div>
     <div class="nav-item" data-page="reports"><span class="nav-icon">◈</span><span data-i18n="reports">التقارير</span></div>
-    <div class="nav-item" data-page="debts"><span class="nav-icon">💳</span><span>الديون</span></div>
+    <div class="nav-item" data-page="debts"><span class="nav-icon">💳</span><span>ديون الموردين</span></div>
+    <div class="nav-item" data-page="custdebts"><span class="nav-icon">👤</span><span>ديون الزبائن</span></div>
     <div class="nav-item" data-page="settings"><span class="nav-icon">◎</span><span data-i18n="settings">الإعدادات</span></div>
   </nav>
   <div class="sb-foot">
@@ -1085,6 +1168,53 @@ body.pwa-standalone .toast-c{
       </div>
     </section>
 
+    <!-- CUSTOMER DEBTS — LIST VIEW -->
+    <section class="page" id="page-custdebts">
+      <!-- LIST subview -->
+      <div id="cdListView">
+        <div class="page-head">
+          <div><h1>ديون الزبائن</h1><p class="page-sub" id="cdSub"></p></div>
+          <button class="btn btn-primary" id="addCustBtn">+ زبون جديد</button>
+        </div>
+        <div class="cust-summary-grid">
+          <div class="cust-kpi cr"><span class="cust-kv" id="cdkTotal">0</span><span class="cust-kl">إجمالي الديون</span></div>
+          <div class="cust-kpi cw"><span class="cust-kv" id="cdkUnpaid">0</span><span class="cust-kl">غير مسدّد</span></div>
+          <div class="cust-kpi cg"><span class="cust-kv" id="cdkPaid">0</span><span class="cust-kl">مسدّد</span></div>
+          <div class="cust-kpi cb"><span class="cust-kv" id="cdkCount">0</span><span class="cust-kl">عدد الزبائن</span></div>
+        </div>
+        <div class="cust-bar">
+          <input type="text" class="cust-search" id="cdSearch" placeholder="بحث باسم الزبون أو رقم الهاتف…"/>
+          <select class="cust-sort" id="cdSort">
+            <option value="name">حسب الاسم</option>
+            <option value="debt_desc">الأعلى ديناً</option>
+            <option value="debt_asc">الأقل ديناً</option>
+            <option value="recent">الأحدث</option>
+          </select>
+          <select class="cust-sort" id="cdFilter">
+            <option value="all">الكل</option>
+            <option value="over">تجاوز الحد</option>
+            <option value="hasdebt">لديه دين</option>
+            <option value="clear">مديونية صفر</option>
+          </select>
+        </div>
+        <div class="cust-grid" id="custGrid">
+          <p class="empty">لا يوجد زبائن مسجّلون.</p>
+        </div>
+      </div>
+
+      <!-- DETAIL subview -->
+      <div id="cdDetailView" style="display:none">
+        <button class="back-btn" id="cdBackBtn">← رجوع إلى القائمة</button>
+        <div class="cust-detail-header" id="cdDetailHeader"></div>
+        <div class="cust-debt-limit-bar" id="cdLimitBar"></div>
+        <div class="cust-tx-head">
+          <h3>سجل الديون</h3>
+          <button class="btn btn-primary btn-sm" id="addTxBtn">+ إضافة دين</button>
+        </div>
+        <div id="cdTxList"></div>
+      </div>
+    </section>
+
     <!-- SETTINGS -->
     <section class="page" id="page-settings">
       <div class="page-head"><h1 data-i18n="settings">الإعدادات</h1></div>
@@ -1258,6 +1388,58 @@ body.pwa-standalone .toast-c{
 </div>
 
 
+<!-- CUSTOMER ADD/EDIT MODAL -->
+<div class="modal-ov" id="custModal">
+  <div class="modal sm">
+    <div class="modal-hdr"><h2 id="custModalTitle">زبون جديد</h2><button class="m-close" data-close="custModal">✕</button></div>
+    <div class="modal-body">
+      <label class="f-lbl">اسم الزبون *<input type="text" id="cName" placeholder="اسم الزبون الكامل"/></label>
+      <label class="f-lbl" style="margin-top:8px">رقم الهاتف<input type="tel" id="cPhone" placeholder="07XX XXX XXXX" style="direction:ltr"/></label>
+      <label class="f-lbl" style="margin-top:8px">ملاحظات<input type="text" id="cNote" placeholder="عنوان، وصف…"/></label>
+      <label class="f-lbl" style="margin-top:8px">حد الإنذار (د.ع)
+        <input type="number" id="cLimit" placeholder="100000" min="0" step="1000"/>
+        <span style="font-size:.7rem;color:var(--text3);margin-top:3px;display:block">الافتراضي 100,000 د.ع — تنبيه عند التجاوز</span>
+      </label>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-primary" id="saveCustBtn">حفظ</button>
+      <button class="btn btn-ghost" data-close="custModal">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSACTION ADD/EDIT MODAL -->
+<div class="modal-ov" id="txModal">
+  <div class="modal">
+    <div class="modal-hdr"><h2 id="txModalTitle">إضافة دين</h2><button class="m-close" data-close="txModal">✕</button></div>
+    <div class="modal-body">
+      <div class="f-grid">
+        <label class="f-lbl">مبلغ الدين (د.ع) *<input type="number" id="txAmount" placeholder="0" min="0" step="250"/></label>
+        <label class="f-lbl">التاريخ *<input type="date" id="txDate"/></label>
+      </div>
+      <label class="f-lbl" style="margin-top:8px">الأصناف (اختياري — يمكن تركها فارغة)
+        <div id="txItemsContainer" style="margin-top:6px;display:flex;flex-direction:column;gap:6px"></div>
+        <button type="button" id="addTxItemBtn" class="btn btn-ghost btn-sm" style="margin-top:6px">+ إضافة صنف</button>
+      </label>
+      <label class="f-lbl" style="margin-top:8px">ملاحظة<input type="text" id="txNote" placeholder="وصف الدين…"/></label>
+      <label class="f-lbl" style="margin-top:8px">الحالة
+        <select id="txStatus">
+          <option value="unpaid">غير مسدّد</option>
+          <option value="partial">مسدّد جزء منه</option>
+          <option value="paid">مسدّد بالكامل</option>
+        </select>
+      </label>
+      <div id="txPartialRow" style="display:none;margin-top:6px">
+        <label class="f-lbl">المبلغ المسدّد (د.ع)<input type="number" id="txPaidAmt" placeholder="0" min="0" step="250"/></label>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-primary" id="saveTxBtn">حفظ</button>
+      <button class="btn btn-ghost" data-close="txModal">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════════════
      PWA SPLASH SCREEN (shown on first load in standalone)
 ══════════════════════════════════════════════════ -->
@@ -1280,7 +1462,11 @@ body.pwa-standalone .toast-c{
   </button>
   <button class="bn-item" data-page="debts">
     <span class="bn-icon">💳</span>
-    <span>الديون</span>
+    <span>موردين</span>
+  </button>
+  <button class="bn-item" data-page="custdebts">
+    <span class="bn-icon">👤</span>
+    <span>زبائن</span>
   </button>
   <button class="bn-item" data-page="inventory">
     <span class="bn-icon">▤</span>
@@ -3512,6 +3698,531 @@ importJSON = function(file, full){
     r2.readAsText(file);
   }
 };
+
+
+// ===========================================================
+// CUSTOMER DEBTS MODULE — ديون الزبائن
+// ===========================================================
+
+var customers = JSON.parse(localStorage.getItem('pc_customers') || '[]');
+var CUST_DEBT_LIMIT = 100000; // default alert threshold in IQD
+
+PAGE_NAMES['custdebts'] = 'ديون الزبائن';
+
+// Extend refresh
+var _origRefreshCD = refresh;
+refresh = function(page){
+  _origRefreshCD(page);
+  if(page === 'custdebts') renderCustDebts();
+};
+
+// ── Helpers ──────────────────────────────────────────────
+function custTotalDebt(c){
+  return (c.transactions||[]).reduce(function(s,t){ return s+(t.amount||0); }, 0);
+}
+function custTotalPaid(c){
+  return (c.transactions||[]).reduce(function(s,t){
+    if(t.status==='paid') return s+(t.amount||0);
+    if(t.status==='partial') return s+(t.paidAmt||0);
+    return s;
+  }, 0);
+}
+function custRemaining(c){ return custTotalDebt(c) - custTotalPaid(c); }
+function custLimit(c){ return c.debtLimit || CUST_DEBT_LIMIT; }
+function custInitials(name){
+  return (name||'?').trim().split(/\s+/).map(function(w){ return w[0]; }).slice(0,2).join('').toUpperCase();
+}
+function custCardClass(c){
+  var rem = custRemaining(c);
+  if(rem <= 0) return 'all-paid';
+  if(rem >= custLimit(c)) return 'over-limit';
+  if(rem > 0) return 'has-debt';
+  return '';
+}
+function saveCusts(){
+  localStorage.setItem('pc_customers', JSON.stringify(customers));
+  // Firebase sync
+  if(typeof fbAvailable !== 'undefined' && fbAvailable() && fbDb && fbCfg){
+    if(typeof _lastWriteTs !== 'undefined') _lastWriteTs.customers = Date.now();
+    fbDb.collection('pharmacies').doc(fbCfg.projectId)
+      .collection('data').doc('customers')
+      .set({items: customers, updatedAt: new Date().toISOString(), updatedBy: fbUser?fbUser.email:''})
+      .catch(function(){});
+  }
+}
+
+// ── KPIs ─────────────────────────────────────────────────
+function calcCustKPIs(){
+  var totalDebt=0, totalPaid=0;
+  customers.forEach(function(c){
+    totalDebt += custTotalDebt(c);
+    totalPaid += custTotalPaid(c);
+  });
+  return { total:totalDebt, paid:totalPaid, unpaid:totalDebt-totalPaid, count:customers.length };
+}
+
+// ── Current customer in detail view ──────────────────────
+var _cdCustId = null;
+var _editTxId = null;
+var _editCustId = null;
+
+// ── Main render (list view) ───────────────────────────────
+function renderCustDebts(){
+  // Switch to list view
+  var listV = document.getElementById('cdListView');
+  var detailV = document.getElementById('cdDetailView');
+  if(listV) listV.style.display = 'block';
+  if(detailV) detailV.style.display = 'none';
+  _cdCustId = null;
+
+  var kpi = calcCustKPIs();
+  var el = function(id){ return document.getElementById(id); };
+  if(el('cdkTotal'))  el('cdkTotal').textContent  = fmt(kpi.total);
+  if(el('cdkUnpaid')) el('cdkUnpaid').textContent = fmt(kpi.unpaid);
+  if(el('cdkPaid'))   el('cdkPaid').textContent   = fmt(kpi.paid);
+  if(el('cdkCount'))  el('cdkCount').textContent  = kpi.count;
+  if(el('cdSub'))     el('cdSub').textContent     = kpi.count + ' زبون مسجّل';
+
+  var q    = ((el('cdSearch')||{}).value||'').trim().toLowerCase();
+  var sort = ((el('cdSort')||{}).value||'name');
+  var filt = ((el('cdFilter')||{}).value||'all');
+
+  var list = customers.filter(function(c){
+    var match = !q || (c.name||'').toLowerCase().indexOf(q)>=0 || (c.phone||'').indexOf(q)>=0;
+    if(!match) return false;
+    var rem = custRemaining(c);
+    if(filt==='over')    return rem >= custLimit(c);
+    if(filt==='hasdebt') return rem > 0;
+    if(filt==='clear')   return rem <= 0;
+    return true;
+  });
+
+  list.sort(function(a,b){
+    if(sort==='name')       return (a.name||'').localeCompare(b.name||'','ar');
+    if(sort==='debt_desc')  return custRemaining(b) - custRemaining(a);
+    if(sort==='debt_asc')   return custRemaining(a) - custRemaining(b);
+    if(sort==='recent'){
+      var la = (a.transactions||[]).length ? (a.transactions[a.transactions.length-1].date||'') : '';
+      var lb = (b.transactions||[]).length ? (b.transactions[b.transactions.length-1].date||'') : '';
+      return lb.localeCompare(la);
+    }
+    return 0;
+  });
+
+  var grid = el('custGrid');
+  if(!grid) return;
+
+  if(!list.length){
+    grid.innerHTML = '<p class="empty">'+(q||filt!=='all'?'لا توجد نتائج.':'لا يوجد زبائن مسجّلون.')+'</p>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(c){
+    var rem   = custRemaining(c);
+    var total = custTotalDebt(c);
+    var paid  = custTotalPaid(c);
+    var cls   = custCardClass(c);
+    var limit = custLimit(c);
+    var overLimit = rem >= limit;
+    var txCount = (c.transactions||[]).length;
+    var lastTx = txCount ? (c.transactions[c.transactions.length-1].date||'') : '';
+
+    return '<div class="cust-card '+cls+'" data-cid="'+esc(c.id)+'">'
+      + (overLimit ? '<span class="cust-warn-badge">⚠ تجاوز الحد</span>' : '')
+      + '<div class="cust-card-top">'
+        + '<div class="cust-avatar">'+esc(custInitials(c.name))+'</div>'
+        + '<div style="flex:1">'
+          + '<div class="cust-name">'+esc(c.name)+'</div>'
+          + (c.phone ? '<div class="cust-phone">'+esc(c.phone)+'</div>' : '')
+        + '</div>'
+      + '</div>'
+      + '<div class="cust-stats">'
+        + '<div class="cust-stat"><div class="cust-stat-lbl">إجمالي الدين</div><div class="cust-stat-val red">'+fmt(total)+'</div></div>'
+        + '<div class="cust-stat"><div class="cust-stat-lbl">المتبقي</div><div class="cust-stat-val '+(rem>0?'red':'green')+'">'+fmt(rem)+'</div></div>'
+        + '<div class="cust-stat"><div class="cust-stat-lbl">المسدّد</div><div class="cust-stat-val green">'+fmt(paid)+'</div></div>'
+        + '<div class="cust-stat"><div class="cust-stat-lbl">عدد الفواتير</div><div class="cust-stat-val">'+txCount+(lastTx?' · '+fmtD(lastTx):'')+'</div></div>'
+      + '</div>'
+      + '<div class="cust-actions">'
+        + '<button class="act-btn" data-caction="open" data-cid="'+esc(c.id)+'">عرض التفاصيل</button>'
+        + '<button class="act-btn" data-caction="edit" data-cid="'+esc(c.id)+'">تعديل</button>'
+        + '<button class="act-btn del" data-caction="del" data-cid="'+esc(c.id)+'">حذف</button>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+
+  grid.querySelectorAll('[data-caction]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var id = this.getAttribute('data-cid');
+      var action = this.getAttribute('data-caction');
+      if(action==='open')   openCustDetail(id);
+      else if(action==='edit') openCustModal(id);
+      else if(action==='del')  deleteCust(id);
+    });
+  });
+
+  // Card click = open detail
+  grid.querySelectorAll('.cust-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      openCustDetail(this.getAttribute('data-cid'));
+    });
+  });
+}
+
+// ── Customer detail view ──────────────────────────────────
+function openCustDetail(id){
+  var c = customers.find(function(x){ return x.id===id; });
+  if(!c) return;
+  _cdCustId = id;
+
+  document.getElementById('cdListView').style.display = 'none';
+  document.getElementById('cdDetailView').style.display = 'block';
+  document.getElementById('page-custdebts').scrollTop = 0;
+
+  renderCustDetailHeader(c);
+  renderCustLimitBar(c);
+  renderCustTxList(c);
+}
+
+function renderCustDetailHeader(c){
+  var rem = custRemaining(c);
+  var cls = custCardClass(c);
+  var overLimit = rem >= custLimit(c);
+  document.getElementById('cdDetailHeader').innerHTML =
+    '<div class="cust-detail-avatar '+(overLimit?'style="background:rgba(220,38,38,.12);color:var(--red)"':'')+'">'+esc(custInitials(c.name))+'</div>'
+    +'<div class="cust-detail-info">'
+      +'<div class="cust-detail-name">'+esc(c.name)
+        +(overLimit?'<span style="font-size:.65rem;background:var(--red);color:#fff;padding:2px 7px;border-radius:8px;margin-right:8px;font-weight:700"> ⚠ تجاوز الحد</span>':'')
+      +'</div>'
+      +'<div class="cust-detail-meta">'
+        +(c.phone?'📞 '+esc(c.phone)+' &nbsp;·&nbsp; ':'')
+        +' 💳 متبقي: <strong style="color:'+(rem>0?'var(--red)':'var(--green)')+'">'+fmt(rem)+'</strong>'
+        +' &nbsp;·&nbsp; 📋 '+((c.transactions||[]).length)+' فاتورة'
+      +'</div>'
+      +(c.note?'<div style="font-size:.73rem;color:var(--text3);margin-top:3px">📝 '+esc(c.note)+'</div>':'')
+    +'</div>'
+    +'<div style="display:flex;gap:6px;flex-shrink:0">'
+      +'<button class="act-btn" onclick="openCustModal(\''+esc(c.id)+'\')">تعديل</button>'
+    +'</div>';
+}
+
+function renderCustLimitBar(c){
+  var rem   = custRemaining(c);
+  var limit = custLimit(c);
+  var pct   = limit>0 ? Math.min(100, Math.round(rem/limit*100)) : 0;
+  var fillCls = pct>=100?'danger':pct>=70?'warn':'';
+  document.getElementById('cdLimitBar').innerHTML =
+    '<div class="cust-limit-top">'
+      +'<span style="font-size:.75rem;font-weight:600">الدين المتبقي مقابل حد الإنذار</span>'
+      +'<span style="font-size:.75rem;font-family:var(--m)">'+fmt(rem)+' / '+fmt(limit)+'</span>'
+    +'</div>'
+    +'<div class="cust-limit-track">'
+      +'<div class="cust-limit-fill '+fillCls+'" style="width:'+pct+'%"></div>'
+    +'</div>'
+    +'<div style="font-size:.7rem;color:var(--text3);margin-top:4px;text-align:left;direction:ltr">'+pct+'% من الحد</div>';
+}
+
+function renderCustTxList(c){
+  var txs = (c.transactions||[]).slice().sort(function(a,b){
+    return (b.date||'').localeCompare(a.date||'');
+  });
+  var cont = document.getElementById('cdTxList');
+  if(!cont) return;
+  if(!txs.length){
+    cont.innerHTML = '<p class="empty">لا توجد ديون مسجّلة لهذا الزبون.</p>';
+    return;
+  }
+  var statusLabel = {unpaid:'غير مسدّد', partial:'جزء منه', paid:'مسدّد'};
+  var statusCls   = {unpaid:'tx-unpaid', partial:'tx-partial', paid:'tx-paid'};
+  cont.innerHTML = txs.map(function(t){
+    var rem = t.status==='paid' ? 0 : t.status==='partial' ? (t.amount-(t.paidAmt||0)) : t.amount;
+    var itemsHtml = (t.items||[]).length
+      ? '<div class="tx-items-preview">🛒 '+(t.items.map(function(i){ return esc(i); }).join(' · '))+'</div>'
+      : '';
+    var noteHtml = t.note ? '<div class="tx-items-preview">📝 '+esc(t.note)+'</div>' : '';
+    var pctHtml = t.status==='partial' && t.amount>0
+      ? '<div style="padding:0 13px 8px"><div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="height:100%;width:'+Math.round((t.paidAmt||0)/t.amount*100)+'%;background:var(--yellow);border-radius:2px"></div></div></div>'
+      : '';
+    return '<div class="tx-card '+statusCls[t.status]+'">'
+      +'<div class="tx-row">'
+        +'<div>'
+          +'<div class="tx-date">'+fmtD(t.date)+'</div>'
+          +'<span class="badge '+(t.status==='paid'?'bg':t.status==='partial'?'by':'br')+'">'+statusLabel[t.status]+'</span>'
+        +'</div>'
+        +'<div style="text-align:left">'
+          +'<div class="tx-amount '+(t.status==='paid'?'paid':'')+'">'+fmt(t.amount)+'</div>'
+          +(t.status==='partial'?'<div style="font-size:.7rem;color:var(--text3)">متبقي: '+fmt(rem)+'</div>':'')
+        +'</div>'
+      +'</div>'
+      +itemsHtml+noteHtml+pctHtml
+      +'<div class="tx-actions">'
+        +'<button class="act-btn" data-tid="'+esc(t.id)+'" data-taction="edit">تعديل</button>'
+        +(t.status!=='paid'?'<button class="act-btn" style="color:var(--green);border-color:var(--green)" data-tid="'+esc(t.id)+'" data-taction="markpaid">✓ تسديد</button>':'')
+        +'<button class="act-btn del" data-tid="'+esc(t.id)+'" data-taction="del">حذف</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+
+  cont.querySelectorAll('[data-taction]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var tid = this.getAttribute('data-tid');
+      var action = this.getAttribute('data-taction');
+      if(action==='edit')     openTxModal(_cdCustId, tid);
+      else if(action==='markpaid') markTxPaid(_cdCustId, tid);
+      else if(action==='del') deleteTx(_cdCustId, tid);
+    });
+  });
+}
+
+// ── Customer modal ────────────────────────────────────────
+function openCustModal(id){
+  _editCustId = id || null;
+  var c = id ? customers.find(function(x){ return x.id===id; }) : null;
+  var t = document.getElementById('custModalTitle');
+  if(t) t.textContent = id ? 'تعديل الزبون' : 'زبون جديد';
+  document.getElementById('cName').value  = c ? (c.name||'')  : '';
+  document.getElementById('cPhone').value = c ? (c.phone||'') : '';
+  document.getElementById('cNote').value  = c ? (c.note||'')  : '';
+  document.getElementById('cLimit').value = c ? (c.debtLimit||100000) : 100000;
+  openModal('custModal');
+}
+document.getElementById('addCustBtn').addEventListener('click', function(){ openCustModal(null); });
+
+document.getElementById('saveCustBtn').addEventListener('click', function(){
+  var name  = (document.getElementById('cName').value||'').trim();
+  var phone = (document.getElementById('cPhone').value||'').trim();
+  var note  = (document.getElementById('cNote').value||'').trim();
+  var limit = parseFloat(document.getElementById('cLimit').value)||100000;
+  if(!name){ toast('يرجى إدخال اسم الزبون','error'); return; }
+
+  if(_editCustId){
+    var idx = customers.findIndex(function(x){ return x.id===_editCustId; });
+    if(idx>=0){ customers[idx].name=name; customers[idx].phone=phone; customers[idx].note=note; customers[idx].debtLimit=limit; }
+    toast('تم تحديث بيانات الزبون','success');
+  } else {
+    customers.push({id:uid(), name:name, phone:phone, note:note, debtLimit:limit, transactions:[], createdAt:new Date().toISOString()});
+    toast('تمت إضافة الزبون','success');
+  }
+  saveCusts();
+  closeModal('custModal');
+  if(_cdCustId && _editCustId===_cdCustId){
+    var c = customers.find(function(x){ return x.id===_cdCustId; });
+    if(c){ renderCustDetailHeader(c); renderCustLimitBar(c); }
+  } else {
+    renderCustDebts();
+  }
+  updateBadge();
+});
+
+function deleteCust(id){
+  var c = customers.find(function(x){ return x.id===id; });
+  if(!confirm('حذف الزبون «'+(c?c.name:'')+'» وجميع ديونه؟')) return;
+  customers = customers.filter(function(x){ return x.id!==id; });
+  saveCusts();
+  renderCustDebts();
+  updateBadge();
+  toast('تم حذف الزبون','success');
+}
+
+// ── Transaction modal ─────────────────────────────────────
+function openTxModal(custId, txId){
+  _cdCustId  = custId;
+  _editTxId  = txId || null;
+  var c  = customers.find(function(x){ return x.id===custId; });
+  var tx = txId && c ? (c.transactions||[]).find(function(t){ return t.id===txId; }) : null;
+
+  var title = document.getElementById('txModalTitle');
+  if(title) title.textContent = txId ? 'تعديل الدين' : 'إضافة دين — '+(c?c.name:'');
+
+  document.getElementById('txAmount').value  = tx ? (tx.amount||'')    : '';
+  document.getElementById('txDate').value    = tx ? (tx.date||todayStr()) : todayStr();
+  document.getElementById('txNote').value    = tx ? (tx.note||'')      : '';
+  document.getElementById('txStatus').value  = tx ? (tx.status||'unpaid') : 'unpaid';
+  document.getElementById('txPaidAmt').value = tx ? (tx.paidAmt||0)   : 0;
+
+  // Items
+  var container = document.getElementById('txItemsContainer');
+  container.innerHTML = '';
+  var items = tx ? (tx.items||[]) : [];
+  items.forEach(function(item){ addTxItemRow(item); });
+
+  // Show/hide partial amount
+  togglePartialRow(tx ? tx.status : 'unpaid');
+
+  openModal('txModal');
+}
+
+function addTxItemRow(val){
+  var row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:6px;align-items:center';
+  row.innerHTML = '<input type="text" placeholder="اسم الصنف أو وصفه…" value="'+esc(val||'')+'" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--surface);color:var(--text);font-size:.82rem;font-family:var(--f)"/>'
+    +'<button type="button" style="color:var(--red);background:none;border:none;cursor:pointer;font-size:1rem;padding:4px" onclick="this.parentNode.remove()">✕</button>';
+  document.getElementById('txItemsContainer').appendChild(row);
+}
+document.getElementById('addTxItemBtn').addEventListener('click', function(){ addTxItemRow(''); });
+
+function togglePartialRow(status){
+  var row = document.getElementById('txPartialRow');
+  if(row) row.style.display = status==='partial' ? 'block' : 'none';
+}
+document.getElementById('txStatus').addEventListener('change', function(){ togglePartialRow(this.value); });
+
+document.getElementById('saveTxBtn').addEventListener('click', function(){
+  var amount  = parseFloat(document.getElementById('txAmount').value)||0;
+  var date    = (document.getElementById('txDate').value||'').trim();
+  var note    = (document.getElementById('txNote').value||'').trim();
+  var status  = document.getElementById('txStatus').value||'unpaid';
+  var paidAmt = parseFloat(document.getElementById('txPaidAmt').value)||0;
+  if(amount<=0){ toast('يرجى إدخال مبلغ الدين','error'); return; }
+  if(!date){ toast('يرجى إدخال التاريخ','error'); return; }
+  if(paidAmt>amount){ toast('المبلغ المسدّد أكبر من الدين','error'); return; }
+
+  // Collect items
+  var items = [];
+  document.querySelectorAll('#txItemsContainer input').forEach(function(inp){
+    var v = (inp.value||'').trim(); if(v) items.push(v);
+  });
+
+  var record = {amount:amount, date:date, note:note, status:status, paidAmt:status==='partial'?paidAmt:status==='paid'?amount:0, items:items, updatedAt:new Date().toISOString()};
+
+  var cidx = customers.findIndex(function(x){ return x.id===_cdCustId; });
+  if(cidx<0){ toast('خطأ: الزبون غير موجود','error'); return; }
+
+  if(_editTxId){
+    var txidx = (customers[cidx].transactions||[]).findIndex(function(t){ return t.id===_editTxId; });
+    if(txidx>=0) customers[cidx].transactions[txidx] = Object.assign({id:_editTxId}, record);
+    toast('تم تحديث الدين','success');
+  } else {
+    record.id = uid();
+    record.createdAt = new Date().toISOString();
+    if(!customers[cidx].transactions) customers[cidx].transactions = [];
+    customers[cidx].transactions.push(record);
+    toast('تمت إضافة الدين','success');
+  }
+
+  saveCusts();
+  closeModal('txModal');
+
+  // Check limit alert
+  var c = customers[cidx];
+  var rem = custRemaining(c);
+  if(rem >= custLimit(c)){
+    setTimeout(function(){
+      toast('⚠ تنبيه: دين الزبون «'+c.name+'» تجاوز '+fmt(custLimit(c))+'!', 'error');
+    }, 600);
+  }
+
+  openCustDetail(_cdCustId);
+  updateBadge();
+});
+
+function markTxPaid(custId, txId){
+  var cidx = customers.findIndex(function(x){ return x.id===custId; });
+  if(cidx<0) return;
+  var txidx = (customers[cidx].transactions||[]).findIndex(function(t){ return t.id===txId; });
+  if(txidx<0) return;
+  customers[cidx].transactions[txidx].status  = 'paid';
+  customers[cidx].transactions[txidx].paidAmt = customers[cidx].transactions[txidx].amount;
+  customers[cidx].transactions[txidx].updatedAt = new Date().toISOString();
+  saveCusts();
+  openCustDetail(custId);
+  updateBadge();
+  toast('تم تسديد الدين ✓','success');
+}
+
+function deleteTx(custId, txId){
+  if(!confirm('حذف هذا الدين نهائياً؟')) return;
+  var cidx = customers.findIndex(function(x){ return x.id===custId; });
+  if(cidx<0) return;
+  customers[cidx].transactions = (customers[cidx].transactions||[]).filter(function(t){ return t.id!==txId; });
+  saveCusts();
+  openCustDetail(custId);
+  updateBadge();
+  toast('تم الحذف','success');
+}
+
+// ── Back button ───────────────────────────────────────────
+document.getElementById('cdBackBtn').addEventListener('click', function(){
+  _cdCustId = null;
+  renderCustDebts();
+});
+
+// ── Add tx from detail view ───────────────────────────────
+document.getElementById('addTxBtn').addEventListener('click', function(){
+  if(_cdCustId) openTxModal(_cdCustId, null);
+});
+
+// ── Search/filter/sort listeners ──────────────────────────
+['cdSearch','cdSort','cdFilter'].forEach(function(id){
+  var el = document.getElementById(id);
+  if(el) el.addEventListener('input', renderCustDebts);
+  if(el) el.addEventListener('change', renderCustDebts);
+});
+
+// ── Patch buildAlerts to include customer over-limit ─────
+var _origBuildAlertsCD = buildAlerts;
+buildAlerts = function(){
+  var alerts = _origBuildAlertsCD();
+  customers.forEach(function(c){
+    var rem = custRemaining(c);
+    if(rem >= custLimit(c)){
+      alerts.unshift({msg:'زبون «'+esc(c.name)+'» تجاوز حد الدين: '+fmt(rem), type:'danger'});
+    }
+  });
+  return alerts;
+};
+
+// ── Firebase real-time listener for customers ─────────────
+(function(){
+  if(typeof fbSubscribeAll === 'undefined') return;
+  var _origSubCD = fbSubscribeAll;
+  fbSubscribeAll = function(){
+    _origSubCD();
+    if(!fbAvailable || !fbAvailable()) return;
+    var base = fbDb.collection('pharmacies').doc(fbCfg.projectId).collection('data');
+    base.doc('customers').onSnapshot(function(snap){
+      if(!snap.exists) return;
+      var data = snap.data();
+      if(!data || !Array.isArray(data.items)) return;
+      if(typeof _lastWriteTs !== 'undefined' && Date.now() - (_lastWriteTs.customers||0) < 3000) return;
+      if(data._cleared){
+        customers = [];
+      } else {
+        customers = data.items;
+      }
+      localStorage.setItem('pc_customers', JSON.stringify(customers));
+      if(curPage==='custdebts'){
+        if(_cdCustId){
+          var c = customers.find(function(x){ return x.id===_cdCustId; });
+          if(c){ renderCustDetailHeader(c); renderCustLimitBar(c); renderCustTxList(c); }
+          else renderCustDebts();
+        } else {
+          renderCustDebts();
+        }
+      }
+      updateBadge();
+    }, function(e){ console.warn('[FB] Customers listener:', e); });
+  };
+})();
+
+// ── Patch clear all to also wipe customers from Firebase ──
+(function(){
+  var _origClearBtn = document.getElementById('clearAllBtn');
+  if(!_origClearBtn) return;
+  // We hook in after the existing handler clears localStorage
+  var existingListeners = _origClearBtn.onclick;
+  _origClearBtn.addEventListener('click', function(){
+    // customers cleared from localStorage by main handler; also clear from Firebase
+    customers = [];
+    localStorage.removeItem('pc_customers');
+    if(typeof fbAvailable !== 'undefined' && fbAvailable() && fbDb && fbCfg){
+      fbDb.collection('pharmacies').doc(fbCfg.projectId)
+        .collection('data').doc('customers')
+        .set({items:[], updatedAt:new Date().toISOString(), updatedBy:fbUser?fbUser.email:'', _cleared:true})
+        .catch(function(){});
+    }
+  });
+})();
 
 
 // ----------------------------------------------------------
