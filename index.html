@@ -2,12 +2,23 @@
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-<meta name="theme-color" content="#1a1822"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="صيدلية"/>
+<meta name="application-name" content="صيدلية"/>
+<meta name="theme-color" content="#1a1822" media="(prefers-color-scheme: dark)"/>
+<meta name="theme-color" content="#1a3a6b" media="(prefers-color-scheme: light)"/>
+<meta name="description" content="نظام إدارة الصيدليات"/>
+<meta name="format-detection" content="telephone=no"/>
 <title>صيدلية الاسرة النموذجية</title>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIti12YrYr9mE2YrYqSDYp9mE2KfYs9ix2Kkg2KfZhNmG2YXZiNiw2KzZitipIiwgInNob3J0X25hbWUiOiAi2LXZitiv2YTZitipIiwgImRlc2NyaXB0aW9uIjogItmG2LjYp9mFINil2K/Yp9ix2Kkg2KfZhNi12YrYr9mE2YrYp9iqIiwgInN0YXJ0X3VybCI6ICIuLyIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjMGYxNzI5IiwgInRoZW1lX2NvbG9yIjogIiMxYTE4MjIiLCAib3JpZW50YXRpb24iOiAiYW55IiwgImxhbmciOiAiYXIiLCAiZGlyIjogInJ0bCIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSGRwWkhSb1BTSXhPVElpSUdobGFXZG9kRDBpTVRreUlpQjJhV1YzUW05NFBTSXdJREFnTVRreUlERTVNaUkrQ2lBZ1BISmxZM1FnZDJsa2RHZzlJakU1TWlJZ2FHVnBaMmgwUFNJeE9USWlJSEo0UFNJME1pSWdabWxzYkQwaUl6RmhNMkUyWWlJdlBnb2dJRHh5WldOMElIZzlJamcwSWlCNVBTSTBOQ0lnZDJsa2RHZzlJakkwSWlCb1pXbG5hSFE5SWpFd05TSWdjbmc5SWpZaUlHWnBiR3c5SWlNMk1HRTFabUVpTHo0S0lDQThjbVZqZENCNFBTSTBOQ0lnZVQwaU9EUWlJSGRwWkhSb1BTSXhNRFVpSUdobGFXZG9kRDBpTWpRaUlISjRQU0kySWlCbWFXeHNQU0lqTmpCaE5XWmhJaTgrQ2lBZ1BIUmxlSFFnZUQwaU9UWWlJSGs5SWpFM09TSWdkR1Y0ZEMxaGJtTm9iM0k5SW0xcFpHUnNaU0lnWm05dWRDMXphWHBsUFNJeE15SWdabWxzYkQwaWNtZGlZU2d5TlRVc01qVTFMREkxTlN3d0xqTTFLU0lnWm05dWRDMW1ZVzFwYkhrOUlrRnlhV0ZzSWo3WXRkbUsySy9aaE5tSzJLazhMM1JsZUhRK0Nqd3ZjM1puUGc9PSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSJ9LCB7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSGRwWkhSb1BTSTFNVElpSUdobGFXZG9kRDBpTlRFeUlpQjJhV1YzUW05NFBTSXdJREFnTlRFeUlEVXhNaUkrQ2lBZ1BISmxZM1FnZDJsa2RHZzlJalV4TWlJZ2FHVnBaMmgwUFNJMU1USWlJSEo0UFNJeE1USWlJR1pwYkd3OUlpTXhZVE5oTm1JaUx6NEtJQ0E4Y21WamRDQjRQU0l5TWpNaUlIazlJakV4TmlJZ2QybGtkR2c5SWpZMklpQm9aV2xuYUhROUlqSTRNU0lnY25nOUlqRTJJaUJtYVd4c1BTSWpOakJoTldaaElpOCtDaUFnUEhKbFkzUWdlRDBpTVRFMklpQjVQU0l5TWpNaUlIZHBaSFJvUFNJeU9ERWlJR2hsYVdkb2REMGlOallpSUhKNFBTSXhOaUlnWm1sc2JEMGlJell3WVRWbVlTSXZQZ29nSUR4MFpYaDBJSGc5SWpJMU5pSWdlVDBpTkRjM0lpQjBaWGgwTFdGdVkyaHZjajBpYldsa1pHeGxJaUJtYjI1MExYTnBlbVU5SWpNMUlpQm1hV3hzUFNKeVoySmhLREkxTlN3eU5UVXNNalUxTERBdU16VXBJaUJtYjI1MExXWmhiV2xzZVQwaVFYSnBZV3dpUHRpMTJZcllyOW1FMllyWXFUd3ZkR1Y0ZEQ0S1BDOXpkbWMrIiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ=="/>
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+CiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSIzOSIgZmlsbD0iIzFhM2E2YiIvPgogIDxyZWN0IHg9Ijc5IiB5PSI0MSIgd2lkdGg9IjIzIiBoZWlnaHQ9Ijk5IiByeD0iNSIgZmlsbD0iIzYwYTVmYSIvPgogIDxyZWN0IHg9IjQxIiB5PSI3OSIgd2lkdGg9Ijk5IiBoZWlnaHQ9IjIzIiByeD0iNSIgZmlsbD0iIzYwYTVmYSIvPgogIDx0ZXh0IHg9IjkwIiB5PSIxNjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zNSkiIGZvbnQtZmFtaWx5PSJBcmlhbCI+2LXZitiv2YTZitipPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="apple-touch-icon" sizes="152x152" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTIiIGhlaWdodD0iMTUyIiB2aWV3Qm94PSIwIDAgMTUyIDE1MiI+CiAgPHJlY3Qgd2lkdGg9IjE1MiIgaGVpZ2h0PSIxNTIiIHJ4PSIzMyIgZmlsbD0iIzFhM2E2YiIvPgogIDxyZWN0IHg9IjY3IiB5PSIzNSIgd2lkdGg9IjE5IiBoZWlnaHQ9IjgzIiByeD0iNCIgZmlsbD0iIzYwYTVmYSIvPgogIDxyZWN0IHg9IjM1IiB5PSI2NyIgd2lkdGg9IjgzIiBoZWlnaHQ9IjE5IiByeD0iNCIgZmlsbD0iIzYwYTVmYSIvPgogIDx0ZXh0IHg9Ijc2IiB5PSIxNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zNSkiIGZvbnQtZmFtaWx5PSJBcmlhbCI+2LXZitiv2YTZitipPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="apple-touch-icon" sizes="167x167" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjciIGhlaWdodD0iMTY3IiB2aWV3Qm94PSIwIDAgMTY3IDE2NyI+CiAgPHJlY3Qgd2lkdGg9IjE2NyIgaGVpZ2h0PSIxNjciIHJ4PSIzNiIgZmlsbD0iIzFhM2E2YiIvPgogIDxyZWN0IHg9IjczIiB5PSIzOCIgd2lkdGg9IjIxIiBoZWlnaHQ9IjkxIiByeD0iNSIgZmlsbD0iIzYwYTVmYSIvPgogIDxyZWN0IHg9IjM4IiB5PSI3MyIgd2lkdGg9IjkxIiBoZWlnaHQ9IjIxIiByeD0iNSIgZmlsbD0iIzYwYTVmYSIvPgogIDx0ZXh0IHg9IjgzIiB5PSIxNTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zNSkiIGZvbnQtZmFtaWx5PSJBcmlhbCI+2LXZitiv2YTZitipPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+CiAgPHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSIzOSIgZmlsbD0iIzFhM2E2YiIvPgogIDxyZWN0IHg9Ijc5IiB5PSI0MSIgd2lkdGg9IjIzIiBoZWlnaHQ9Ijk5IiByeD0iNSIgZmlsbD0iIzYwYTVmYSIvPgogIDxyZWN0IHg9IjQxIiB5PSI3OSIgd2lkdGg9Ijk5IiBoZWlnaHQ9IjIzIiByeD0iNSIgZmlsbD0iIzYwYTVmYSIvPgogIDx0ZXh0IHg9IjkwIiB5PSIxNjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4zNSkiIGZvbnQtZmFtaWx5PSJBcmlhbCI+2LXZitiv2YTZitipPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+CiAgPHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MiIgZmlsbD0iIzFhM2E2YiIvPgogIDxyZWN0IHg9Ijg0IiB5PSI0NCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjEwNSIgcng9IjYiIGZpbGw9IiM2MGE1ZmEiLz4KICA8cmVjdCB4PSI0NCIgeT0iODQiIHdpZHRoPSIxMDUiIGhlaWdodD0iMjQiIHJ4PSI2IiBmaWxsPSIjNjBhNWZhIi8+CiAgPHRleHQgeD0iOTYiIHk9IjE3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMyIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjM1KSIgZm9udC1mYW1pbHk9IkFyaWFsIj7YtdmK2K/ZhNmK2Kk8L3RleHQ+Cjwvc3ZnPg=="/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
@@ -347,6 +358,76 @@ p{line-height:1.6}
 .scan-flash.flash{opacity:1}
 
 /* ── PRINT: handled via popup window in JS — no CSS needed here ── */
+
+
+/* ── iOS SAFE AREA / PWA ─────────────────────────────── */
+:root{
+  --sat: env(safe-area-inset-top,    0px);
+  --sar: env(safe-area-inset-right,  0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left,   0px);
+}
+/* Status bar space when running as standalone PWA */
+body.pwa-standalone .topbar{
+  padding-top: calc(var(--sat) + 8px);
+  height: calc(var(--th) + var(--sat));
+}
+body.pwa-standalone .sidebar{
+  padding-top: var(--sat);
+}
+body.pwa-standalone .main-wrap{
+  padding-top: 0; /* topbar already handles it */
+}
+/* Home indicator space at bottom */
+body.pwa-standalone .cart-foot,
+body.pwa-standalone .sb-foot{
+  padding-bottom: calc(12px + var(--sab));
+}
+body.pwa-standalone .toast-c{
+  bottom: calc(18px + var(--sab));
+}
+/* Landscape safe area for sidebar */
+@media(max-width:940px){
+  body.pwa-standalone .sidebar{
+    padding-right: var(--sal);
+  }
+}
+
+/* ── PWA SPLASH / LAUNCH ─────────────────────────────── */
+#pwaSplash{
+  display:none;
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(160deg,#0f1729 0%,#1a2d5a 60%,#0f1729 100%);
+  align-items:center;justify-content:center;flex-direction:column;gap:16px;
+  font-family:var(--f);
+}
+#pwaSplash.show{display:flex;}
+.pwa-splash-icon{font-size:4rem;animation:splashPulse 1.2s ease-in-out infinite alternate}
+.pwa-splash-name{font-size:1.3rem;font-weight:700;color:#fff;text-align:center;line-height:1.4}
+.pwa-splash-sub{font-size:.82rem;color:rgba(255,255,255,.45)}
+.pwa-splash-bar{width:160px;height:3px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;margin-top:8px}
+.pwa-splash-fill{height:100%;width:0%;background:#60a5fa;border-radius:2px;animation:splashLoad 1.1s ease-out forwards}
+@keyframes splashPulse{from{transform:scale(1)}to{transform:scale(1.08)}}
+@keyframes splashLoad{from{width:0%}to{width:100%}}
+@keyframes splashFade{from{opacity:1}to{opacity:0;pointer-events:none}}
+
+/* ── INSTALL BANNER ──────────────────────────────────── */
+#installBanner{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;
+  background:var(--sb);border-top:1px solid rgba(255,255,255,.1);
+  padding:12px 16px calc(12px + var(--sab));
+  flex-direction:row;align-items:center;gap:12px;
+  box-shadow:0 -4px 20px rgba(0,0,0,.4);
+}
+#installBanner.show{display:flex;}
+.ib-icon{font-size:1.8rem;flex-shrink:0}
+.ib-text{flex:1}
+.ib-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:2px}
+.ib-sub{font-size:.72rem;color:rgba(255,255,255,.5);line-height:1.4}
+.ib-btn{padding:8px 16px;background:#2563eb;color:#fff;border-radius:8px;font-size:.8rem;font-weight:700;font-family:var(--f);white-space:nowrap;flex-shrink:0}
+.ib-btn:hover{background:#1d4ed8}
+.ib-close{color:rgba(255,255,255,.4);font-size:1rem;padding:4px 6px;flex-shrink:0}
+.ib-close:hover{color:#fff}
 
 /* ══════════════════════════════════════════════════════
    RESPONSIVE — TABLET 1200px
@@ -825,6 +906,31 @@ p{line-height:1.6}
   </div>
 </div>
 
+
+<!-- ═══════════════════════════════════════════════
+     PWA SPLASH SCREEN (shown on first load in standalone)
+══════════════════════════════════════════════════ -->
+<div id="pwaSplash">
+  <div class="pwa-splash-icon">⚕</div>
+  <div class="pwa-splash-name">صيدلية الاسرة النموذجية</div>
+  <div class="pwa-splash-sub">نظام إدارة الصيدليات</div>
+  <div class="pwa-splash-bar"><div class="pwa-splash-fill"></div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     INSTALL BANNER (iOS / Android)
+══════════════════════════════════════════════════ -->
+<div id="installBanner">
+  <span class="ib-icon">⚕</span>
+  <div class="ib-text">
+    <div class="ib-title">أضف التطبيق للشاشة الرئيسية</div>
+    <div class="ib-sub">اضغط <strong style="color:#60a5fa">مشاركة</strong> ثم <strong style="color:#60a5fa">إضافة إلى الشاشة الرئيسية</strong></div>
+  </div>
+  <button class="ib-btn" id="installBtn">تثبيت</button>
+  <button class="ib-close" id="installClose">✕</button>
+</div>
+
+<div class="toast-c" id="toastC2" style="display:none"></div>
 <div class="toast-c" id="toastC"></div>
 
 <script>
@@ -1961,6 +2067,161 @@ function init(){
     go('dashboard');
   }catch(err){ console.error('Init error:',err); }
 }
+
+
+// ----------------------------------------------------------
+// 20. PWA — Service Worker, Install Banner, Standalone Mode
+// ----------------------------------------------------------
+
+// ── Detect standalone mode ───────────────────────────────
+var _isStandalone=(
+  window.navigator.standalone===true ||
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.matchMedia('(display-mode: fullscreen)').matches
+);
+if(_isStandalone) document.body.classList.add('pwa-standalone');
+
+// ── Splash screen (standalone only) ─────────────────────
+(function(){
+  var splash=document.getElementById('pwaSplash');
+  if(!splash) return;
+  if(_isStandalone){
+    splash.classList.add('show');
+    setTimeout(function(){
+      splash.style.animation='splashFade .4s ease forwards';
+      setTimeout(function(){ splash.style.display='none'; },400);
+    }, 1200);
+  }
+})();
+
+// ── Register Service Worker (inline via blob) ────────────
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+
+  var SW_VERSION = '1.0.0';
+  var CACHE_NAME = 'pharmacare-v' + SW_VERSION;
+
+  // Service worker script as a string — registered via blob URL
+  // Caches the app shell (this single HTML file) for offline use
+  var swCode = [
+    '"use strict";',
+    'var CACHE="pharmacare-v' + SW_VERSION + '";',
+    'var SHELL=["./"];',
+    'self.addEventListener("install",function(e){',
+    '  e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(SHELL);}));',
+    '  self.skipWaiting();',
+    '});',
+    'self.addEventListener("activate",function(e){',
+    '  e.waitUntil(caches.keys().then(function(keys){',
+    '    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));',
+    '  }));',
+    '  self.clients.claim();',
+    '});',
+    'self.addEventListener("fetch",function(e){',
+    '  if(e.request.method!=="GET") return;',
+    '  e.respondWith(',
+    '    caches.match(e.request).then(function(cached){',
+    '      var fresh=fetch(e.request).then(function(res){',
+    '        if(res&&res.status===200&&res.type==="basic"){',
+    '          var clone=res.clone();',
+    '          caches.open(CACHE).then(function(c){c.put(e.request,clone);});',
+    '        }',
+    '        return res;',
+    '      }).catch(function(){return cached;});',
+    '      return cached||fresh;',
+    '    })',
+    '  );',
+    '});'
+  ].join('\n');
+
+  try{
+    var blob=new Blob([swCode],{type:'application/javascript'});
+    var swUrl=URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl,{scope:'./'})
+      .then(function(reg){
+        console.log('[PWA] Service worker registered, scope:', reg.scope);
+      })
+      .catch(function(err){
+        console.warn('[PWA] SW registration failed (expected on file://):', err.message);
+      });
+  }catch(err){
+    console.warn('[PWA] SW blob error:', err);
+  }
+})();
+
+// ── Install Banner ───────────────────────────────────────
+(function(){
+  var banner=document.getElementById('installBanner');
+  var installBtn=document.getElementById('installBtn');
+  var closeBtn=document.getElementById('installClose');
+  if(!banner) return;
+
+  var _deferredPrompt=null;
+  var _dismissed=sessionStorage.getItem('pwa_banner_dismissed');
+
+  // Android / Chrome: beforeinstallprompt
+  window.addEventListener('beforeinstallprompt',function(e){
+    e.preventDefault();
+    _deferredPrompt=e;
+    if(!_dismissed&&!_isStandalone){
+      setTimeout(function(){ banner.classList.add('show'); },3000);
+    }
+  });
+
+  // iOS: show if not standalone and not dismissed, with delay
+  var _isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  var _isSafari=/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  if(_isIOS&&_isSafari&&!_isStandalone&&!_dismissed){
+    // Show iOS-specific instructions after 4s
+    setTimeout(function(){
+      banner.classList.add('show');
+      // iOS can't use the install prompt, button just closes
+      if(installBtn) installBtn.style.display='none';
+    },4000);
+  }
+
+  if(installBtn){
+    installBtn.addEventListener('click',function(){
+      banner.classList.remove('show');
+      if(_deferredPrompt){
+        _deferredPrompt.prompt();
+        _deferredPrompt.userChoice.then(function(r){
+          if(r.outcome==='accepted') toast('تم تثبيت التطبيق!','success');
+          _deferredPrompt=null;
+        });
+      }
+    });
+  }
+  if(closeBtn){
+    closeBtn.addEventListener('click',function(){
+      banner.classList.remove('show');
+      sessionStorage.setItem('pwa_banner_dismissed','1');
+    });
+  }
+})();
+
+// ── Prevent double-tap zoom on iOS ──────────────────────
+(function(){
+  var _lastTap=0;
+  document.addEventListener('touchend',function(e){
+    var now=Date.now();
+    if(now-_lastTap<300){ e.preventDefault(); }
+    _lastTap=now;
+  },{passive:false});
+})();
+
+// ── Status bar color sync with theme ────────────────────
+function _updateThemeColor(){
+  var dark=document.documentElement.getAttribute('data-theme')==='dark';
+  var metas=document.querySelectorAll('meta[name="theme-color"]');
+  metas.forEach(function(m){ m.setAttribute('content', dark?'#1a1822':'#1a3a6b'); });
+}
+// Hook into existing theme toggle
+var _origApplyTheme=applyTheme;
+applyTheme=function(dark){
+  _origApplyTheme(dark);
+  _updateThemeColor();
+};
 
 // Start: show login first, then init after successful login
 checkLogin();
