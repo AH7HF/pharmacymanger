@@ -2355,10 +2355,42 @@ document.getElementById('exportCsvBtn').addEventListener('click',function(){
 document.getElementById('importAllFile').addEventListener('change',function(e){ importJSON(e.target.files[0],true); this.value=''; });
 document.getElementById('importJsonFile').addEventListener('change',function(e){ importJSON(e.target.files[0],true); this.value=''; });
 document.getElementById('clearAllBtn').addEventListener('click',function(){
-  if(confirm('هل أنت متأكد من مسح جميع البيانات نهائياً؟')){
-    localStorage.clear(); meds=[]; sales=[]; sett={pharmacyName:'صيدلية الاسرة النموذجية',currency:'د.ع',lowStock:10,adminPass:'1234'}; cart=[];
-    lsSet(KEYS.sett,sett); toast('تم مسح جميع البيانات','success'); refresh(curPage); updateBadge();
+  if(!confirm('هل أنت متأكد من مسح جميع البيانات نهائياً؟\nسيتم الحذف من هذا الجهاز ومن قاعدة البيانات السحابية.')) return;
+
+  // 1. Reset local state
+  meds=[];
+  sales=[];
+  debts=[];
+  sett={pharmacyName:'صيدلية الاسرة النموذجية',currency:'د.ع',lowStock:10,adminPass:'1234'};
+  cart=[];
+
+  // 2. Clear localStorage (keep auth + firebase config)
+  var fbCfgBackup = localStorage.getItem('pc_firebase_cfg');
+  var fbSetupFlag  = localStorage.getItem('pc_fb_setup_shown');
+  localStorage.clear();
+  if(fbCfgBackup) localStorage.setItem('pc_firebase_cfg', fbCfgBackup);
+  if(fbSetupFlag)  localStorage.setItem('pc_fb_setup_shown', fbSetupFlag);
+  _origLsSet(KEYS.sett, sett);
+
+  // 3. Delete from Firebase (set empty arrays — deletion of doc would break listeners)
+  if(fbAvailable()){
+    var base = fbDb.collection('pharmacies').doc(fbCfg.projectId).collection('data');
+    var empty = {items:[], updatedAt: new Date().toISOString(), updatedBy: fbUser.email, _cleared: true};
+    Promise.all([
+      base.doc('medicines').set(empty),
+      base.doc('sales').set(empty),
+      base.doc('debts').set(empty),
+      base.doc('settings').set(Object.assign({},sett,{updatedAt:new Date().toISOString(),updatedBy:fbUser.email}))
+    ]).then(function(){
+      toast('تم مسح جميع البيانات من الجهاز وقاعدة البيانات ✓','success');
+    }).catch(function(e){
+      toast('مُسح محلياً — خطأ في Firebase: '+e.message,'warn');
+    });
   }
+
+  refresh(curPage);
+  updateBadge();
+  toast('جارٍ مسح البيانات...','info');
 });
 
 // ----------------------------------------------------------
@@ -2494,56 +2526,101 @@ function fbPushSett(){
 }
 
 // ── Sync: listen for real-time updates ───────────────────
+// Track last write timestamps to avoid echo-back from own writes
+var _lastWriteTs = { meds:0, sales:0, sett:0, debts:0 };
+var _ECHO_WINDOW = 3000; // ms — ignore snapshots within 3s of own write
+
 function fbSubscribeAll(){
   if(!fbAvailable()) return;
   var base = fbDb.collection('pharmacies').doc(fbCfg.projectId).collection('data');
 
-  // Medicines
+  // ── Medicines ──────────────────────────────────────────
   if(_unsubMeds) _unsubMeds();
   _unsubMeds = base.doc('medicines').onSnapshot(function(snap){
     if(!snap.exists) return;
     var data = snap.data();
-    if(data && data.items && data.updatedBy !== fbUser.email){
+    if(!data || !Array.isArray(data.items)) return;
+    // Skip if this was written by us very recently (echo-back prevention)
+    if(Date.now() - _lastWriteTs.meds < _ECHO_WINDOW) return;
+    // Handle clear event
+    if(data._cleared){
+      meds = [];
+    } else {
       meds = data.items;
-      lsSet(KEYS.meds, meds);
-      refresh(curPage);
-      updateBadge();
-      toast('🔄 تم تحديث الأدوية من جهاز آخر', 'info');
+    }
+    _origLsSet(KEYS.meds, meds); // use _origLsSet to avoid re-pushing to Firebase
+    refresh(curPage);
+    updateBadge();
+    if(data.updatedBy && data.updatedBy !== fbUser.email){
+      toast('🔄 مزامنة: الأدوية تحدّثت', 'info');
     }
   }, function(e){ console.warn('[FB] Meds listener:', e); });
 
-  // Sales
+  // ── Sales ──────────────────────────────────────────────
   if(_unsubSales) _unsubSales();
   _unsubSales = base.doc('sales').onSnapshot(function(snap){
     if(!snap.exists) return;
     var data = snap.data();
-    if(data && data.items && data.updatedBy !== fbUser.email){
+    if(!data || !Array.isArray(data.items)) return;
+    if(Date.now() - _lastWriteTs.sales < _ECHO_WINDOW) return;
+    if(data._cleared){
+      sales = [];
+    } else {
       sales = data.items;
-      lsSet(KEYS.sales, sales);
-      refresh(curPage);
-      toast('🔄 تم تحديث المبيعات من جهاز آخر', 'info');
+    }
+    _origLsSet(KEYS.sales, sales);
+    refresh(curPage);
+    if(data.updatedBy && data.updatedBy !== fbUser.email){
+      toast('🔄 مزامنة: المبيعات تحدّثت', 'info');
     }
   }, function(e){ console.warn('[FB] Sales listener:', e); });
 
-  // Settings
+  // ── Settings ───────────────────────────────────────────
   if(_unsubSett) _unsubSett();
   _unsubSett = base.doc('settings').onSnapshot(function(snap){
     if(!snap.exists) return;
     var data = snap.data();
-    if(data && data.updatedBy !== fbUser.email){
-      var merged = Object.assign({}, sett, data);
-      delete merged.updatedAt; delete merged.updatedBy;
-      sett = merged;
-      lsSet(KEYS.sett, sett);
-      refresh(curPage);
-    }
+    if(!data) return;
+    if(Date.now() - _lastWriteTs.sett < _ECHO_WINDOW) return;
+    var merged = Object.assign({}, sett, data);
+    delete merged.updatedAt; delete merged.updatedBy; delete merged._cleared;
+    sett = merged;
+    _origLsSet(KEYS.sett, sett);
+    refresh(curPage);
   }, function(e){ console.warn('[FB] Sett listener:', e); });
+
+  // ── Debts ──────────────────────────────────────────────
+  if(typeof _unsubDebts !== 'undefined' && _unsubDebts) _unsubDebts();
+  _unsubDebts = base.doc('debts').onSnapshot(function(snap){
+    if(!snap.exists) return;
+    var data = snap.data();
+    if(!data || !Array.isArray(data.items)) return;
+    if(Date.now() - _lastWriteTs.debts < _ECHO_WINDOW) return;
+    if(data._cleared){
+      debts = [];
+    } else {
+      // Preserve local images (not stored in Firebase)
+      var remote = data.items;
+      remote.forEach(function(rd){
+        var local = debts.find(function(ld){ return ld.id===rd.id; });
+        if(local && local.img) rd.img = local.img;
+      });
+      debts = remote;
+    }
+    localStorage.setItem('pc_debts', JSON.stringify(debts));
+    if(curPage==='debts') renderDebts();
+    if(data.updatedBy && data.updatedBy !== fbUser.email){
+      toast('🔄 مزامنة: الديون تحدّثت', 'info');
+    }
+  }, function(e){ console.warn('[FB] Debts listener:', e); });
 }
 
+var _unsubDebts = null;
 function fbUnsubscribeAll(){
-  if(_unsubMeds){ _unsubMeds(); _unsubMeds=null; }
-  if(_unsubSales){ _unsubSales(); _unsubSales=null; }
-  if(_unsubSett){ _unsubSett(); _unsubSett=null; }
+  if(_unsubMeds)  { _unsubMeds();  _unsubMeds=null; }
+  if(_unsubSales) { _unsubSales(); _unsubSales=null; }
+  if(_unsubSett)  { _unsubSett();  _unsubSett=null; }
+  if(_unsubDebts) { _unsubDebts(); _unsubDebts=null; }
 }
 
 // ── Force full sync ───────────────────────────────────────
@@ -2591,9 +2668,10 @@ var _origLsSet = lsSet;
 lsSet = function(k, v){
   _origLsSet(k, v);
   if(!fbAvailable()) return;
-  if(k === KEYS.meds)  fbPushMeds();
-  if(k === KEYS.sales) fbPushSales();
-  if(k === KEYS.sett)  fbPushSett();
+  // Stamp write time to suppress echo-back in listeners
+  if(k === KEYS.meds)  { _lastWriteTs.meds  = Date.now(); fbPushMeds(); }
+  if(k === KEYS.sales) { _lastWriteTs.sales = Date.now(); fbPushSales(); }
+  if(k === KEYS.sett)  { _lastWriteTs.sett  = Date.now(); fbPushSett(); }
 };
 
 // ── PATCH doLogout to also sign out of Firebase ──────────
@@ -3372,15 +3450,15 @@ lsSet = function(k, v){
   _origLsSetDebts(k, v);
   // If debts key changed and Firebase available, push (without image data to save quota)
   if(k === KEYS.debts && fbAvailable && fbAvailable()){
+    _lastWriteTs.debts = Date.now(); // stamp to suppress echo-back
     var slim = (v||[]).map(function(d){
       var s = Object.assign({}, d);
-      // Don't sync base64 images to Firestore (too large) — store locally only
-      if(s.img && s.img.length > 500) s.img = ''; 
+      if(s.img && s.img.length > 500) s.img = '';
       return s;
     });
     fbDb.collection('pharmacies').doc(fbCfg.projectId)
       .collection('data').doc('debts')
-      .set({items:slim, updatedAt: new Date().toISOString()})
+      .set({items:slim, updatedAt: new Date().toISOString(), updatedBy: fbUser ? fbUser.email : ''})
       .catch(function(){});
   }
 };
